@@ -47,7 +47,7 @@ def update(frame_number):
         
 
 
-animation = matplotlib.animation.FuncAnimation(fig, update, interval=1)
+animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, repeat=False, frames=num_of_iterations)
 matplotlib.pyplot.show()
 # matplotlib.pyplot.xlim(0, 300)
 # matplotlib.pyplot.ylim(0, 300)
