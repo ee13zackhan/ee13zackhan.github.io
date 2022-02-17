@@ -4,7 +4,7 @@ import matplotlib.pyplot
 import matplotlib.animation 
 
 num_of_agents = 10
-num_of_iterations = 100
+num_of_iterations = 10
 agents = []
 
 fig = matplotlib.pyplot.figure(figsize=(7, 7))

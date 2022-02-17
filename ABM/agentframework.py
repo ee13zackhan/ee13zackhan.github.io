@@ -6,21 +6,21 @@ Created on Tue Feb  1 11:10:18 2022
 """
 import random
 
-DEBUG = True
-
 class Agent:
     
     """
     Provides methods to instantialise and control agents
     """
     
-    def __init__(self, environment, agents, idnum):
+    
+    def __init__(self, environment, agents, idnum, colour):
         self._idnum = idnum
         self._x = random.randint(0,99)
         self._y = random.randint(0,99)
         self.environment = environment
         self.store = 0
         self.agents = agents
+        self.colour = colour
     
         """
         Parameters: Environment for agents to interact with, a list of all agents to allow communication with others
@@ -69,7 +69,7 @@ class Agent:
                 avg = total / 2
                 self.store = avg
                 agent.store = avg
-                print(f"distance = {str(distance)}, store = {str(self.store)}. My idnum = {str(self.idnum)}, Agent idnum = {str(agent.idnum)}")
+                # print(f"distance = {str(distance)}, store = {str(self.store)}. My idnum = {str(self.idnum)}, Agent idnum = {str(agent.idnum)}")
             # else:
             #     print("none")
         """

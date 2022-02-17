@@ -17,7 +17,7 @@ for row in reader:
     
 f.close()
 
-matplotlib.pyplot.xlim(0, 300)
-matplotlib.pyplot.ylim(0, 300)
-matplotlib.pyplot.imshow(environment)
-matplotlib.pyplot.show()
+# matplotlib.pyplot.xlim(0, 300)
+# matplotlib.pyplot.ylim(0, 300)
+# matplotlib.pyplot.imshow(environment)
+# matplotlib.pyplot.show()
