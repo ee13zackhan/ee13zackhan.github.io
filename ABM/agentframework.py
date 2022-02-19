@@ -7,13 +7,53 @@ Created on Tue Feb  1 11:10:18 2022
 import random
 
 class Agent:
-    
     """
-    Provides methods to instantialise and control agents
+    A class used to represent agents in an agent based model
+    
+    ...
+    
+    Attributes
+    ----------
+    idnum: int
+        The ID number of the agent
+    x: int
+        The agent's x coordinate
+    y: int
+        The agent's y coordinate
+    environment: list
+        A link to a 2D list that contains environment data
+    store: int
+        The amount of "food" stores the agent has
+    agents: list
+        A link to a list of all agents
+    colour: str
+        The colour that will be used when plotting/animating the agent
+        
+    Methods
+    -------
+    move()
+        Moves the agent randomly by a max of one step
+    eat()
+        Makes the agent eat the environment
+    distance_between(a, b)
+        Returns the distance between two agents
+    share_with_neighbours(neighbourhood)
+        Shares its store with a close-by agent
     """
-    
-    
+       
     def __init__(self, environment, agents, idnum, colour):
+        """
+        Parameters
+        ----------
+        environment: list
+            A link to a 2D list that contains environment data
+        agents: list
+            A link to a list of all agents
+        idnum: int
+            The ID number of the agent
+        colour: str
+            The colour that will be used when plotting/animating the agent
+        """
         self._idnum = idnum
         self._x = random.randint(0,99)
         self._y = random.randint(0,99)
@@ -21,61 +61,89 @@ class Agent:
         self.store = 0
         self.agents = agents
         self.colour = colour
-    
-        """
-        Parameters: Environment for agents to interact with, a list of all agents to allow communication with others
-        Output: instantialises an agent and links it to the environment and list of all agents
-        """
+
     
     def move(self):
-        if random.random() < 0.5:
-            self._y = (self._y + 1) % 100
-        else:
-            self._y = (self._y - 1) % 100
-
-        if random.random() < 0.5:
-            self._x = (self._x + 1) % 100
-        else:
-            self._x = (self._x - 1) % 100
         """
-        Parameters: None
-        Output: Moves an agent on a random walk in a diagonal path
-        """     
+        Randomly moves the agent by one step or stays still
+        
+        Parameters
+        ----------
+        None
+        """ 
+        rand_y = random.random()
+        if rand_y < 0.33:
+            self._y = (self._y + 1) % 100
+        elif 0.33 <= rand_y < 0.66:
+            self._y = (self._y - 1) % 100
+        else:
+            pass
+
+        rand_x = random.random()
+        if rand_x < 0.33:
+            self._x = (self._x + 1) % 100
+        elif 0.33 <= rand_x < 0.66:
+            self._x = (self._x - 1) % 100
+        else:
+            pass
+    
        
     def eat(self):
+        """
+        Checks if the environment where the agent is standing has a value of 10 or 
+        greater. If so, it subtracts 10 from the environment and adds 10 to
+        its own store value
+        
+        Parameters
+        ----------
+        None
+        """ 
         if self.environment[self._y][self._x] > 10:
             self.environment[self._y][self._x] -= 10
             self.store += 10
+
         
+    def distance_between(a, b):
         """
-        Parameters: None
-        Output: instructs an agent to eat at the environment
-        """
+        Calculates and returns the Euclidian distance from one agent to 
+        another using Pythagoras' Theorem
         
-    def distance_between(agents_row_a, agents_row_b):
-        return (((agents_row_a._x - agents_row_b._x)**2) +
-        ((agents_row_a._y - agents_row_b._y)**2))**0.5
+        Parameters
+        ----------
+        a: int
+            The first agent
+        b: int
+            The second agent
+        """ 
+        return (((a._x - b._x)**2) +
+        ((a._y - b._y)**2))**0.5
         
-        """
-        Parameters: agent 1, agent 2
-        Output: returns the distance between the two input agents
-        """
     
     def share_with_neighbours(self, neighbourhood):
+        """
+        Calculates the distance to other agents and if within the 
+        neighbourhood distance takes the average of their store value. Both 
+        agents' store value is then set to the average
+        
+        Parameters
+        ----------
+        neighbourhood: int
+            The maximum distance to other agents that will result in resources 
+            being shared
+        """
         for agent in self.agents:
-            distance = self.distance_between(agent)
-            if (self.idnum != agent.idnum) and (distance <= neighbourhood):
-                total = self.store + agent.store
-                avg = total / 2
-                self.store = avg
-                agent.store = avg
-                # print(f"distance = {str(distance)}, store = {str(self.store)}. My idnum = {str(self.idnum)}, Agent idnum = {str(agent.idnum)}")
-            # else:
-            #     print("none")
-        """
-        Parameters: Neighbourhood
-        Output: Instructs an agent to share resources with another agent within the neighbourhood distance
-        """
+            if self.idnum != agent.idnum:
+                distance = self.distance_between(agent)
+                if (distance <= neighbourhood):
+                    total = self.store + agent.store
+                    avg = total / 2
+                    self.store = avg
+                    agent.store = avg
+                #     print(f"{self.idnum}, {agent.idnum}, {distance}, SHARED")
+                # else:
+                #     print(f"{self.idnum}, {agent.idnum}, {distance}, NOT SHARED")
+
+
         
     @property
     def x(self):
