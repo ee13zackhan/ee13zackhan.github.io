@@ -160,8 +160,8 @@ class Agent:
         self.store = avg
         self.agents[last].store = avg
         
-        self.agents[last].x = self.x()
-        self.agents[last].y = self.y()
+        self.agents[last].x = self.x
+        self.agents[last].y = self.y
                     
 
     @property

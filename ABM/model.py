@@ -14,7 +14,7 @@ random.seed(1)
 # Outlining the starting and stopping conditions of the model and creating
 # variables that wil be used throughout.
 num_of_agents = 10
-num_of_iterations = 20
+num_of_iterations = 100
 neighbourhood = 20
 agents = []
 colours = ["red","blue","green","yellow","purple","orange","white","black"]
@@ -60,7 +60,7 @@ def update(frame_number):
         agents[i].move()
         agents[i].eat()
         agents[i].share_with_neighbours(neighbourhood)
-        if agents[i].age > 5 and agents[i].store > 75:
+        if agents[i].age > 5 and agents[i].store > 50:
             agents[i].split()
             temp += 1
         
@@ -74,7 +74,7 @@ def update(frame_number):
         
     num_of_agents += temp
     # Change stop to True if store conditions are met for all agents.
-    stop = all(agents[i].store >= 100 for i in range(num_of_agents))
+    stop = all(agents[i].store >= 500 for i in range(num_of_agents))
     matplotlib.pyplot.imshow(raster)
     
 
@@ -95,5 +95,5 @@ def stopping():
         a += 1
     
 # Create and show animation of agents
-animation = matplotlib.animation.FuncAnimation(fig,update,interval=1,frames=stopping,repeat=False)
+animation = matplotlib.animation.FuncAnimation(fig,update,interval=1,frames=num_of_iterations,repeat=False)
 matplotlib.pyplot.show()
