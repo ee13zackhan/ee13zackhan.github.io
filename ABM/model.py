@@ -20,6 +20,7 @@ agents = []
 colours = ["red","blue","green","yellow","purple","orange","white","black"]
 stop = False
 fig = matplotlib.pyplot.figure(figsize=(6,6))
+# ax = fig.add_axes([0, 0, 1, 1])
 
 # Calling the make_enviro() function from enviro.py
 raster = enviro.make_enviro("in.txt")
@@ -77,22 +78,22 @@ def update(frame_number):
     matplotlib.pyplot.imshow(raster)
     
 
-# def stopping():
-#     """
-#     Defines the stopping conditions for the animation function and yields the 
-#     the frame/iteration number.
+def stopping():
+    """
+    Defines the stopping conditions for the animation function and yields the 
+    the frame/iteration number.
     
-#     Yields
-#     ------
-#     a : int
-#         The current frame/iteration number
+    Yields
+    ------
+    a : int
+        The current frame/iteration number
 
-#     """
-#     a=0
-#     while (a<num_of_iterations) & (not stop):
-#         yield a
-#         a += 1
+    """
+    a=0
+    while (a<num_of_iterations) & (not stop):
+        yield a
+        a += 1
     
 # Create and show animation of agents
-animation = matplotlib.animation.FuncAnimation(fig,update,interval=1,frames=num_of_iterations,repeat=False)
+animation = matplotlib.animation.FuncAnimation(fig,update,interval=1,frames=stopping,repeat=False)
 matplotlib.pyplot.show()
