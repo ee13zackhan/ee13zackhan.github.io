@@ -68,8 +68,8 @@ def update(frame_number):
         
         
         # Create the scatter plots for each agent.
-        matplotlib.pyplot.xlim(0, 100)
-        matplotlib.pyplot.ylim(0, 100)
+        matplotlib.pyplot.xlim(0, 300)
+        matplotlib.pyplot.ylim(0, 300)
         matplotlib.pyplot.scatter(agents[i].y,agents[i].x, color=agents[i].colour)
         
     num_of_agents += temp

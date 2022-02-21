@@ -55,8 +55,8 @@ class Agent:
             The colour that will be used when plotting/animating the agent
         """
         self._idnum = idnum
-        self._x = random.randint(0,99)
-        self._y = random.randint(0,99)
+        self._x = random.randint(0,300)
+        self._y = random.randint(0,300)
         self.environment = environment
         self.store = 0
         self.agents = agents
@@ -75,17 +75,17 @@ class Agent:
         """ 
         rand_y = random.random()
         if rand_y < 0.33:
-            self._y = (self._y + 1) % 100
+            self._y = (self._y + 1) % 300
         elif 0.33 <= rand_y < 0.66:
-            self._y = (self._y - 1) % 100
+            self._y = (self._y - 1) % 300
         else:
             pass
 
         rand_x = random.random()
         if rand_x < 0.33:
-            self._x = (self._x + 1) % 100
+            self._x = (self._x + 1) % 300
         elif 0.33 <= rand_x < 0.66:
-            self._x = (self._x - 1) % 100
+            self._x = (self._x - 1) % 300
         else:
             pass
     
