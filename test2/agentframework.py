@@ -40,7 +40,7 @@ class Agent:
     share_with_neighbours(neighbourhood)
         Shares its store with a close-by agent
     """
-    num_agents = 0
+       
     def __init__(self, environment, agents, idnum, colour):
         """
         Parameters
@@ -61,8 +61,6 @@ class Agent:
         self.store = 0
         self.agents = agents
         self.colour = colour
-        self.age = 0
-        Agent.num_agents += 1
 
     
     def move(self):
@@ -145,25 +143,8 @@ class Agent:
                     avg = total / 2
                     self.store = avg
                     agent.store = avg
-                    
-    def split(self):
-        a = 0
-        for i in range(Agent.num_agents):
-            b = self.agents[i].idnum
-            if b > a:
-                a = b
-        
-        self.agents.append(Agent(self.environment, self.agents, a + 1, self.colour))
-        
-        last = len(self.agents) - 1
-        avg = self.store / 2
-        self.store = avg
-        self.agents[last].store = avg
-        
-        self.agents[last].x = self.x()
-        self.agents[last].y = self.y()
-                    
 
+        
     @property
     def x(self):
         return self._x
