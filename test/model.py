@@ -5,9 +5,6 @@ Created on Tue Feb  1 11:10:18 2022
 @author: 200779106
 """
 import random
-import matplotlib
-matplotlib.use('TkAgg')
-import tkinter
 import matplotlib.pyplot as pt
 import matplotlib.animation as an
 import agentframework
@@ -81,8 +78,8 @@ def update(frame_number):
                 pt.scatter(agents[i].y,agents[i].x,color=agents[i].colour)
         
         # Plots for previously dead (may be better without?)
-        # elif agents[i].alive == False:
-        #     pt.scatter(agents[i].y,agents[i].x,color=agents[i].colour,marker="x",alpha=0.5)
+        elif agents[i].alive == False:
+            pt.scatter(agents[i].y,agents[i].x,color=agents[i].colour,marker="x",alpha=0.5)
         
     # Change stop to True if conditions are met for all agents
     # stop = all(agents[i].store <= 500 for i in range(agentframework.Agent.num_agents))
@@ -104,35 +101,9 @@ def stopping():
     """
     a=0
     while (a<num_of_iterations) & (not stop):
-        yield a
+        yield print(a+1)
         a += 1
     
 # Create and show animation of agents
-def run():
-    animation = an.FuncAnimation(fig,update,interval=1,frames=stopping,repeat=False)
-    canvas.draw()
-
-root = tkinter.Tk()
-# root.wm_title("Model")
-canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig,master=root)
-canvas._tkcanvas.pack(side=tkinter.TOP,fill=tkinter.BOTH,expand=1)
-
-menu_bar = tkinter.Menu(root)
-root.config(menu=menu_bar)
-model_menu = tkinter.Menu(menu_bar)
-menu_bar.add_cascade(label="Model", menu=model_menu)
-model_menu.add_command(label="Run Model", command=run)
-
-
-
-tkinter.mainloop()
-
-
-
-
-
-
-
-
-
-
+animation = an.FuncAnimation(fig,update,interval=1,frames=stopping,repeat=False)
+pt.show()
