@@ -10,8 +10,6 @@ class Agent:
     """
     A class used to represent agents in an agent based model
     
-    ...
-    
     Attributes
     ----------
     idnum: int
@@ -39,6 +37,14 @@ class Agent:
         Returns the distance between two agents
     share_with_neighbours(neighbourhood)
         Shares its store with a close-by agent
+    split()
+        Creates a new instance of the agent (Child)
+    reproduce()
+        Outlines probabilistic conditions for an agent to "reproduce" based 
+        on store value
+    die()
+        Outlines probabilistic conditions for an agent to "die" based 
+        on store value
     """
     num_agents = 0
     
@@ -70,10 +76,6 @@ class Agent:
     def move(self):
         """
         Randomly moves the agent by one step or stays still
-        
-        Parameters
-        ----------
-        None
         """ 
         rand_y = random.random()
         if rand_y < 0.33:
@@ -97,10 +99,6 @@ class Agent:
         Checks if the environment where the agent is standing has a value of 
         10 or greater. If so, it subtracts 10 from the environment and adds 
         10 to its own store value
-        
-        Parameters
-        ----------
-        None
         """ 
         if self.environment[self._x][self._y] > 50:
             self.environment[self._x][self._y] -= 50
@@ -147,21 +145,30 @@ class Agent:
                     avg = total / 3
                     self.store = avg
                     agent.store = avg
-                    
+
+# https://stackoverflow.com/questions/37209921/python-how-not-to-sort-sphinx-output-in-alphabetical-order
+
     def split(self):
-        
-        self.agents.append(Agent(self.environment, self.agents, "grey"))
+        """
+        Creates a new agent and splits the "Parent's" store evenly with the 
+        "Child"
+        """        
+        self.agents.append(Agent(self.environment, self.agents, self.colour))
         
         last = Agent.num_agents - 1
         avg = self.store / 2
         self.store = avg
         self.agents[last].store = avg
         
-        self.agents[last]._x = self._x
-        self.agents[last]._y = self._y
+        # self.agents[last]._x = self._x
+        # self.agents[last]._y = self._y
         
         
     def reproduce(self):
+        """
+        Outlines probabilistic conditions for an agent to "reproduce" based 
+        on store value
+        """
         if self.store > 17 and random.random() < 0.9:
             self.split()
             
@@ -176,19 +183,23 @@ class Agent:
         
         
     def die(self):
-        if self.store < 5 and random.random() < 0.9:
+        """
+        Outlines probabilistic conditions for an agent to "die" based on
+        store value
+        """
+        if self.store < 5 and random.random() < 0.75:
             self.alive = False
             
-        elif self.store < 7 and random.random() < 0.75:
+        elif self.store < 7 and random.random() < 0.5:
             self.alive = False
             
-        elif self.store < 10 and random.random() < 0.5:
+        elif self.store < 10 and random.random() < 0.25:
             self.alive = False
             
-        elif self.store < 12 and random.random() < 0.25:
+        elif self.store < 12 and random.random() < 0.1:
             self.alive = False
-            
-            
+    
+    
     @property
     def x(self):
         return self._x
