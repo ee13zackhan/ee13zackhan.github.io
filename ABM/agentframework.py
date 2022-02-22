@@ -63,6 +63,7 @@ class Agent:
         self.agents = agents
         self.colour = colour
         self.age = 0
+        self.alive = True
         Agent.num_agents += 1
 
     
@@ -101,8 +102,8 @@ class Agent:
         ----------
         None
         """ 
-        if self.environment[self._y][self._x] > 10:
-            self.environment[self._y][self._x] -= 10
+        if self.environment[self._x][self._y] > 50:
+            self.environment[self._x][self._y] -= 50
             self.store += 10
 
         
@@ -143,7 +144,7 @@ class Agent:
                 distance = self.distance_between(agent)
                 if (distance <= neighbourhood):
                     total = self.store + agent.store
-                    avg = total / 2
+                    avg = total / 3
                     self.store = avg
                     agent.store = avg
                     
@@ -152,15 +153,42 @@ class Agent:
         self.agents.append(Agent(self.environment, self.agents, "grey"))
         
         last = Agent.num_agents - 1
-        
         avg = self.store / 2
         self.store = avg
         self.agents[last].store = avg
         
-        self.agents[last]._x = self.x
-        self.agents[last]._y = self.y
+        self.agents[last]._x = self._x
+        self.agents[last]._y = self._y
         
-
+        
+    def reproduce(self):
+        if self.store > 17 and random.random() < 0.9:
+            self.split()
+            
+        elif self.store > 15 and random.random() < 0.75:
+            self.split()
+            
+        elif self.store > 13 and random.random() < 0.5:
+            self.split()
+            
+        elif self.store > 10 and random.random() < 0.25:
+            self.split()
+        
+        
+    def die(self):
+        if self.store < 5 and random.random() < 0.9:
+            self.alive = False
+            
+        elif self.store < 7 and random.random() < 0.75:
+            self.alive = False
+            
+        elif self.store < 10 and random.random() < 0.5:
+            self.alive = False
+            
+        elif self.store < 12 and random.random() < 0.25:
+            self.alive = False
+            
+            
     @property
     def x(self):
         return self._x
