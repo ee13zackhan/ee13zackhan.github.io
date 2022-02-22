@@ -41,7 +41,8 @@ class Agent:
         Shares its store with a close-by agent
     """
     num_agents = 0
-    def __init__(self, environment, agents, idnum, colour):
+    
+    def __init__(self, environment, agents, colour):
         """
         Parameters
         ----------
@@ -54,7 +55,7 @@ class Agent:
         colour: str
             The colour that will be used when plotting/animating the agent
         """
-        self._idnum = idnum
+        self._idnum = Agent.num_agents
         self._x = random.randint(0,300)
         self._y = random.randint(0,300)
         self.environment = environment
@@ -147,22 +148,18 @@ class Agent:
                     agent.store = avg
                     
     def split(self):
-        a = 0
-        for i in range(Agent.num_agents):
-            b = self.agents[i].idnum
-            if b > a:
-                a = b
         
-        self.agents.append(Agent(self.environment, self.agents, a + 1, self.colour))
+        self.agents.append(Agent(self.environment, self.agents, "grey"))
         
-        last = len(self.agents) - 1
+        last = Agent.num_agents - 1
+        
         avg = self.store / 2
         self.store = avg
         self.agents[last].store = avg
         
-        self.agents[last].x = self.x
-        self.agents[last].y = self.y
-                    
+        self.agents[last]._x = self.x
+        self.agents[last]._y = self.y
+        
 
     @property
     def x(self):

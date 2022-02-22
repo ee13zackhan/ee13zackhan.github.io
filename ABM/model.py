@@ -13,7 +13,7 @@ random.seed(1)
 
 # Outlining the starting and stopping conditions of the model and creating
 # variables that wil be used throughout.
-num_of_agents = 10
+num_of_agents = 20
 num_of_iterations = 100
 neighbourhood = 20
 agents = []
@@ -27,7 +27,7 @@ raster = enviro.make_enviro("in.txt")
 
 # Make the agents.
 for i in range(num_of_agents):
-    agents.append(agentframework.Agent(raster, agents, i, colours[i%len(colours)]))
+    agents.append(agentframework.Agent(raster, agents, colours[i%len(colours)]))
 
 # A function to make each frame of the model/animation.
 def update(frame_number):
@@ -52,7 +52,7 @@ def update(frame_number):
     fig.clear()
     
     # Randomise the order of agents
-    # random.shuffle(agents)
+    random.shuffle(agents)
     
     temp = 0
     # Actions (methods) that each agent completes every iteration.
@@ -61,8 +61,9 @@ def update(frame_number):
         agents[i].eat()
         agents[i].share_with_neighbours(neighbourhood)
         if agents[i].age > 5 and agents[i].store > 50:
-            agents[i].split()
-            temp += 1
+            if random.random() > 0.8:
+                agents[i].split()
+                temp += 1
         
         agents[i].age += 1
         
