@@ -24,7 +24,6 @@ def make_enviro(file_path):
     -------
     rstr : list
         A 2D list containing the environment raster data
-
     """
     f = open(file_path, newline='')
     reader = csv.reader(f,quoting=csv.QUOTE_NONNUMERIC)

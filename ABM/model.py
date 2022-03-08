@@ -4,7 +4,7 @@ Created on Tue Feb  1 11:10:18 2022
 
 @author: 200779106
 """
-import random
+# import random
 import matplotlib
 matplotlib.use('TkAgg')
 import tkinter
@@ -24,7 +24,7 @@ neighbourhood = 20
 agents = []
 stop = False
 fig = pt.figure(figsize=(8,8))
-# ax = fig.add_axes([0, 0, 1, 1])
+ax = fig.add_axes([0, 0, 1, 1])
 
 # Calling the make_enviro() function from enviro.py
 raster = enviro.make_enviro("in.txt")
@@ -39,6 +39,7 @@ td_xs = soup.find_all(attrs={"class" : "x"})
 
 # Make the agents using the values from the td_ys and td_xs as the starting position
 for i in range(initial):
+    # Read the x and y values from the arrays as an integer (ignoring HTML)
     y = int(td_ys[i].text)
     x = int(td_xs[i].text)
     agents.append(agentframework.Agent(i, raster, agents, td_ys, td_xs, y, x))
@@ -59,13 +60,12 @@ def update(frame_number):
     Returns
     -------
     None
-
     """
     global stop
     fig.clear()
     
     # Randomise the order of agents
-    random.shuffle(agents)
+    # random.shuffle(agents)
 
     # Actions (methods) that each agent completes every iteration
     for i in range(len(agents)):
@@ -103,7 +103,6 @@ def update(frame_number):
     
     pt.imshow(raster)
     
-
 def stopping():
     """
     Defines the stopping conditions for the animation function and yields the 
@@ -124,7 +123,6 @@ def stopping():
 def run():
     """
     Creates the model animation
-
     """
     animation = an.FuncAnimation(fig,update,interval=1,frames=stopping,repeat=False)
     canvas.draw()

@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>agentframework module &#8212; Docs 1 documentation</title>
+    <link rel="stylesheet" href="_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Docs 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-agentframework">
+<span id="agentframework-module"></span><h1>agentframework module<a class="headerlink" href="#module-agentframework" title="Permalink to this headline">¶</a></h1>
+<p>Created on Tue Feb  1 11:10:18 2022</p>
+<p>&#64;author: 200779106</p>
+<dl class="class">
+<dt id="agentframework.Agent">
+<em class="property">class </em><code class="sig-prename descclassname">agentframework.</code><code class="sig-name descname">Agent</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">environment</em>, <em class="sig-param">agents</em>, <em class="sig-param">td_ys</em>, <em class="sig-param">td_xs</em>, <em class="sig-param">y</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class used to represent agents in an agent based model</p>
+<dl class="simple">
+<dt>idnum: int</dt><dd><p>The ID number of the agent</p>
+</dd>
+<dt>x: int</dt><dd><p>The agent’s x coordinate</p>
+</dd>
+<dt>y: int</dt><dd><p>The agent’s y coordinate</p>
+</dd>
+<dt>environment: list</dt><dd><p>A link to a 2D list that contains environment data</p>
+</dd>
+<dt>store: int</dt><dd><p>The amount of “food” stores the agent has</p>
+</dd>
+<dt>agents: list</dt><dd><p>A link to a list of all agents</p>
+</dd>
+<dt>colour: str</dt><dd><p>The colour that will be used when plotting/animating the agent</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>move()</dt><dd><p>Moves the agent randomly by a max of one step</p>
+</dd>
+<dt>eat()</dt><dd><p>Makes the agent eat the environment</p>
+</dd>
+<dt>distance_between(a, b)</dt><dd><p>Returns the distance between two agents</p>
+</dd>
+<dt>share_with_neighbours(neighbourhood)</dt><dd><p>Shares its store with a close-by agent</p>
+</dd>
+<dt>split()</dt><dd><p>Creates a new instance of the agent (Child)</p>
+</dd>
+<dt>reproduce()</dt><dd><p>Outlines probabilistic conditions for an agent to “reproduce” based 
+on store value</p>
+</dd>
+<dt>die()</dt><dd><p>Outlines probabilistic conditions for an agent to “die” based 
+on store value</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="agentframework.Agent.move">
+<code class="sig-name descname">move</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly moves the agent by one step or stays still</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.eat">
+<code class="sig-name descname">eat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent.eat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the environment where the agent is standing has a value of 
+10 or greater. If so, it subtracts 10 from the environment and adds 
+10 to its own store value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.distance_between">
+<code class="sig-name descname">distance_between</code><span class="sig-paren">(</span><em class="sig-param">b</em><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent.distance_between" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates and returns the Euclidian distance from one agent to 
+another using Pythagoras’ Theorem</p>
+<dl class="simple">
+<dt>a: int</dt><dd><p>The first agent</p>
+</dd>
+<dt>b: int</dt><dd><p>The second agent</p>
+</dd>
+</dl>
+<blockquote>
+<div><p>The distance between the two agents that were input</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.share_with_neighbours">
+<code class="sig-name descname">share_with_neighbours</code><span class="sig-paren">(</span><em class="sig-param">neighbourhood</em><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent.share_with_neighbours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the distance to other agents and if within the 
+neighbourhood distance takes the average of their store value. Both 
+agents’ store value is then set to the average</p>
+<dl class="simple">
+<dt>neighbourhood: int</dt><dd><p>The maximum distance to other agents that will result in resources 
+being shared</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.split">
+<code class="sig-name descname">split</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new agent and splits the “Parent’s” store evenly with the 
+“Child”</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.reproduce">
+<code class="sig-name descname">reproduce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent.reproduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outlines probabilistic conditions for an agent to “reproduce” based 
+on store value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.die">
+<code class="sig-name descname">die</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent.die" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outlines probabilistic conditions for an agent to “die” based on
+store value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.x">
+<em class="property">property </em><code class="sig-name descname">x</code><a class="headerlink" href="#agentframework.Agent.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.setx">
+<em class="property">property </em><code class="sig-name descname">setx</code><a class="headerlink" href="#agentframework.Agent.setx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.delx">
+<em class="property">property </em><code class="sig-name descname">delx</code><a class="headerlink" href="#agentframework.Agent.delx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.y">
+<em class="property">property </em><code class="sig-name descname">y</code><a class="headerlink" href="#agentframework.Agent.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.sety">
+<em class="property">property </em><code class="sig-name descname">sety</code><a class="headerlink" href="#agentframework.Agent.sety" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.dely">
+<em class="property">property </em><code class="sig-name descname">dely</code><a class="headerlink" href="#agentframework.Agent.dely" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.idnum">
+<em class="property">property </em><code class="sig-name descname">idnum</code><a class="headerlink" href="#agentframework.Agent.idnum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.setidnum">
+<em class="property">property </em><code class="sig-name descname">setidnum</code><a class="headerlink" href="#agentframework.Agent.setidnum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="agentframework.Agent.delidnum">
+<em class="property">property </em><code class="sig-name descname">delidnum</code><a class="headerlink" href="#agentframework.Agent.delidnum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/agentframework.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Docs 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, 200779106.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+    </div>
+  </body>
+</html>
