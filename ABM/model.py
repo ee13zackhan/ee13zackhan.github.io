@@ -10,6 +10,9 @@ matplotlib.use('TkAgg')
 import tkinter
 import matplotlib.pyplot as pt
 import matplotlib.animation as an
+import requests
+import bs4
+
 import agentframework
 import enviro
 
@@ -19,7 +22,6 @@ initial = 20
 num_of_iterations = 100
 neighbourhood = 20
 agents = []
-colours = ["red","blue","green","yellow","purple","orange","white","black","pink"]
 stop = False
 fig = pt.figure(figsize=(8,8))
 ax = fig.add_axes([0, 0, 1, 1])
@@ -27,9 +29,17 @@ ax = fig.add_axes([0, 0, 1, 1])
 # Calling the make_enviro() function from enviro.py
 raster = enviro.make_enviro("in.txt")
 
+r = requests.get('http://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html')
+content = r.text
+soup = bs4.BeautifulSoup(content, 'html.parser')
+td_ys = soup.find_all(attrs={"class" : "y"})
+td_xs = soup.find_all(attrs={"class" : "x"})
+
 # Make the agents.
 for i in range(initial):
-    agents.append(agentframework.Agent(raster, agents, "red"))
+    y = int(td_ys[i].text)
+    x = int(td_xs[i].text)
+    agents.append(agentframework.Agent(i, raster, agents, td_ys, td_xs, y, x))
 
 # A function to make each frame of the model/animation
 def update(frame_number):
@@ -56,7 +66,8 @@ def update(frame_number):
     random.shuffle(agents)
 
     # Actions (methods) that each agent completes every iteration
-    for i in range(agentframework.Agent.num_agents):
+    #for i in range(agentframework.Agent.num_agents):
+    for i in range(len(agents)):
         if agents[i].alive == True: 
             agents[i].move()
             agents[i].eat()
@@ -74,11 +85,11 @@ def update(frame_number):
             
             # Plots for those who died this iteration
             if agents[i].alive == False:
-                pt.scatter(agents[i].y,agents[i].x,color=agents[i].colour,marker="x")
+                pt.scatter(agents[i].y,agents[i].x,color="red",marker="x")
             
             # plots for living
             else:
-                pt.scatter(agents[i].y,agents[i].x,color=agents[i].colour)
+                pt.scatter(agents[i].y,agents[i].x,color="white")
         
         # Plots for previously dead (may be better without?)
         # elif agents[i].alive == False:
@@ -86,7 +97,7 @@ def update(frame_number):
         
     # Change stop to True if conditions are met for all agents
     # stop = all(agents[i].store <= 500 for i in range(agentframework.Agent.num_agents))
-    stop = all(agents[i].alive == False for i in range(agentframework.Agent.num_agents))
+    stop = all(agents[i].alive == False for i in range(len(agents)))
     
     pt.imshow(raster)
     
@@ -94,7 +105,7 @@ def update(frame_number):
 def stopping():
     """
     Defines the stopping conditions for the animation function and yields the 
-    the frame/iteration number.
+    the frame/iteration number. 
     
     Yields
     ------
@@ -109,11 +120,16 @@ def stopping():
     
 # Create and show animation of agents
 def run():
+    """
+    Creates the model animation
+
+    """
     animation = an.FuncAnimation(fig,update,interval=1,frames=stopping,repeat=False)
     canvas.draw()
 
+# Create a GUI which has the ability to call the function "run()" 
 root = tkinter.Tk()
-# root.wm_title("Model")
+root.wm_title("Agent Based Model")
 canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig,master=root)
 canvas._tkcanvas.pack(side=tkinter.TOP,fill=tkinter.BOTH,expand=1)
 
@@ -122,7 +138,6 @@ root.config(menu=menu_bar)
 model_menu = tkinter.Menu(menu_bar)
 menu_bar.add_cascade(label="Model", menu=model_menu)
 model_menu.add_command(label="Run Model", command=run)
-
 
 
 tkinter.mainloop()

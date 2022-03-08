@@ -46,9 +46,8 @@ class Agent:
         Outlines probabilistic conditions for an agent to "die" based 
         on store value
     """
-    num_agents = 0
     
-    def __init__(self, environment, agents, colour):
+    def __init__(self, i, environment, agents, td_ys, td_xs, y, x):
         """
         Parameters
         ----------
@@ -61,16 +60,22 @@ class Agent:
         colour: str
             The colour that will be used when plotting/animating the agent
         """
-        self._idnum = Agent.num_agents
-        self._x = random.randint(0,300)
-        self._y = random.randint(0,300)
+        self._idnum = i
+        if (x == None):
+            self._x = random.randint(0,300)
+        else:
+            self._x = x
+        if (y == None):
+            self._y = random.randint(0,100)
+        else:
+            self._y = y
         self.environment = environment
         self.store = 0
         self.agents = agents
-        self.colour = colour
         self.age = 0
         self.alive = True
-        Agent.num_agents += 1
+        self.xs = td_xs
+        self.ys = td_ys
 
     
     def move(self):
@@ -153,15 +158,17 @@ class Agent:
         Creates a new agent and splits the "Parent's" store evenly with the 
         "Child"
         """        
-        self.agents.append(Agent(self.environment, self.agents, self.colour))
+        newid = len(self.agents)
+        xs = int(self.xs[newid].text)
+        ys = int(self.ys[newid].text)
+        self.agents.append(Agent(newid, self.environment, self.agents, self.ys, self.xs, ys, xs))
         
-        last = Agent.num_agents - 1
         avg = self.store / 2
         self.store = avg
-        self.agents[last].store = avg
+        self.agents[newid].store = avg
         
-        # self.agents[last]._x = self._x
-        # self.agents[last]._y = self._y
+        # self.agents[newid]._x = self._x
+        # self.agents[newid]._y = self._y
         
         
     def reproduce(self):
