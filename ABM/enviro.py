@@ -12,18 +12,18 @@ rstr = []
 
 def make_enviro(file_path):
     """
-    Function which returns a list containing the environment raster data
+    A function which returns a list containing the environment raster data
 
-    Parameters
-    ----------
-    file_path : .csv file
-        A comma seperated value file containing environment data for the agents 
-        to interact with e.g. food for agents to eat 
+    Parameters:
+        
+        file_path : .csv file
+            A comma seperated value file containing environment data for the agents 
+            to interact with e.g. food for agents to eat 
 
-    Returns
-    -------
-    rstr : list
-        A 2D list containing the environment raster data
+    Returns:
+        
+        rstr : list
+            A 2D list containing the environment raster data
     """
     f = open(file_path, newline='')
     reader = csv.reader(f,quoting=csv.QUOTE_NONNUMERIC)

@@ -13,18 +13,19 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('.'))
+
 sys.path.append('M:\GitHub\ee13zackhan.github.io\ABM')
 
 # -- Project information -----------------------------------------------------
 
-project = 'Docs'
+project = 'Agent Based Model'
 copyright = '2022, 200779106'
 author = '200779106'
 
 # The full version, including alpha/beta/rc tags
 release = '1'
-autodoc_member_order = 'bysource'
 
+autodoc_member_order = 'bysource'
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be

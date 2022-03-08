@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>agentframework module &#8212; Docs 1 documentation</title>
+    <title>agentframework module &#8212; Agent Based Model 1 documentation</title>
     <link rel="stylesheet" href="_static/groundwork.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -13,7 +13,9 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="enviro module" href="enviro.html" />
+    <link rel="prev" title="Welcome to Agent Based Model’s documentation!" href="index.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -24,7 +26,13 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Docs 1 documentation</a> &#187;</li> 
+        <li class="right" >
+          <a href="enviro.html" title="enviro module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Agent Based Model’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Agent Based Model 1 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -42,7 +50,9 @@
 <em class="property">class </em><code class="sig-prename descclassname">agentframework.</code><code class="sig-name descname">Agent</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">environment</em>, <em class="sig-param">agents</em>, <em class="sig-param">td_ys</em>, <em class="sig-param">td_xs</em>, <em class="sig-param">y</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class used to represent agents in an agent based model</p>
-<dl class="simple">
+<p>Attributes:</p>
+<blockquote>
+<div><dl class="simple">
 <dt>idnum: int</dt><dd><p>The ID number of the agent</p>
 </dd>
 <dt>x: int</dt><dd><p>The agent’s x coordinate</p>
@@ -55,27 +65,17 @@
 </dd>
 <dt>agents: list</dt><dd><p>A link to a list of all agents</p>
 </dd>
-<dt>colour: str</dt><dd><p>The colour that will be used when plotting/animating the agent</p>
+<dt>age:</dt><dd><p>The age of the agent. Starts at 0 and increases by one every iteration
+the agent is alive.</p>
+</dd>
+<dt>alive:</dt><dd><p>A Boolean to keep track of if the agent is alive or dead</p>
+</dd>
+<dt>xs:</dt><dd><p>A link to a list of x values from the web</p>
+</dd>
+<dt>ys:</dt><dd><p>A link to a list of y values from the web</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>move()</dt><dd><p>Moves the agent randomly by a max of one step</p>
-</dd>
-<dt>eat()</dt><dd><p>Makes the agent eat the environment</p>
-</dd>
-<dt>distance_between(a, b)</dt><dd><p>Returns the distance between two agents</p>
-</dd>
-<dt>share_with_neighbours(neighbourhood)</dt><dd><p>Shares its store with a close-by agent</p>
-</dd>
-<dt>split()</dt><dd><p>Creates a new instance of the agent (Child)</p>
-</dd>
-<dt>reproduce()</dt><dd><p>Outlines probabilistic conditions for an agent to “reproduce” based 
-on store value</p>
-</dd>
-<dt>die()</dt><dd><p>Outlines probabilistic conditions for an agent to “die” based 
-on store value</p>
-</dd>
-</dl>
+</div></blockquote>
 <dl class="method">
 <dt id="agentframework.Agent.move">
 <code class="sig-name descname">move</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent.move" title="Permalink to this definition">¶</a></dt>
@@ -95,12 +95,16 @@ on store value</p>
 <code class="sig-name descname">distance_between</code><span class="sig-paren">(</span><em class="sig-param">b</em><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent.distance_between" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates and returns the Euclidian distance from one agent to 
 another using Pythagoras’ Theorem</p>
-<dl class="simple">
+<p>Parameters:</p>
+<blockquote>
+<div><dl class="simple">
 <dt>a: int</dt><dd><p>The first agent</p>
 </dd>
 <dt>b: int</dt><dd><p>The second agent</p>
 </dd>
 </dl>
+</div></blockquote>
+<p>Returns:</p>
 <blockquote>
 <div><p>The distance between the two agents that were input</p>
 </div></blockquote>
@@ -113,8 +117,11 @@ another using Pythagoras’ Theorem</p>
 neighbourhood distance takes the average of their store value. Both 
 agents’ store value is then set to the average</p>
 <dl class="simple">
+<dt>Parameters:</dt><dd><dl class="simple">
 <dt>neighbourhood: int</dt><dd><p>The maximum distance to other agents that will result in resources 
 being shared</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -123,7 +130,7 @@ being shared</p>
 <dt id="agentframework.Agent.split">
 <code class="sig-name descname">split</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#agentframework.Agent.split" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a new agent and splits the “Parent’s” store evenly with the 
-“Child”</p>
+new agent</p>
 </dd></dl>
 
 <dl class="method">
@@ -195,6 +202,12 @@ store value</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Agent Based Model’s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="enviro.html"
+                        title="next chapter">enviro module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -225,7 +238,13 @@ store value</p>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Docs 1 documentation</a> &#187;</li> 
+        <li class="right" >
+          <a href="enviro.html" title="enviro module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Agent Based Model’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Agent Based Model 1 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

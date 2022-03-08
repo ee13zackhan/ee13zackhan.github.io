@@ -10,55 +10,43 @@ class Agent:
     """
     A class used to represent agents in an agent based model
     
-    Attributes
-    ----------
-    idnum: int
-        The ID number of the agent
-    x: int
-        The agent's x coordinate
-    y: int
-        The agent's y coordinate
-    environment: list
-        A link to a 2D list that contains environment data
-    store: int
-        The amount of "food" stores the agent has
-    agents: list
-        A link to a list of all agents
-    colour: str
-        The colour that will be used when plotting/animating the agent
+    Attributes:
         
-    Methods
-    -------
-    move()
-        Moves the agent randomly by a max of one step
-    eat()
-        Makes the agent eat the environment
-    distance_between(a, b)
-        Returns the distance between two agents
-    share_with_neighbours(neighbourhood)
-        Shares its store with a close-by agent
-    split()
-        Creates a new instance of the agent (Child)
-    reproduce()
-        Outlines probabilistic conditions for an agent to "reproduce" based 
-        on store value
-    die()
-        Outlines probabilistic conditions for an agent to "die" based 
-        on store value
+        idnum: int
+            The ID number of the agent
+        x: int
+            The agent's x coordinate
+        y: int
+            The agent's y coordinate
+        environment: list
+            A link to a 2D list that contains environment data
+        store: int
+            The amount of "food" stores the agent has
+        agents: list
+            A link to a list of all agents
+        age:
+            The age of the agent. Starts at 0 and increases by one every iteration
+            the agent is alive.
+        alive:
+            A Boolean to keep track of if the agent is alive or dead
+        xs:
+            A link to a list of x values from the web
+        ys:
+            A link to a list of y values from the web
     """
     
     def __init__(self, i, environment, agents, td_ys, td_xs, y, x):
         """
-        Parameters
-        ----------
-        environment: list
-            A link to a 2D list that contains environment data
-        agents: list
-            A link to a list of all agents
-        idnum: int
-            The ID number of the agent
-        colour: str
-            The colour that will be used when plotting/animating the agent
+        Parameters:
+            
+            environment: list
+                A link to a 2D list that contains environment data
+            agents: list
+                A link to a list of all agents
+            idnum: int
+                The ID number of the agent
+            colour: str
+                The colour that will be used when plotting/animating the agent
         """
         self._idnum = i
         if (x == None):
@@ -117,15 +105,15 @@ class Agent:
         Calculates and returns the Euclidian distance from one agent to 
         another using Pythagoras' Theorem
         
-        Parameters
-        ----------
-        a: int
-            The first agent
-        b: int
-            The second agent
+        Parameters:
             
-        Returns
-        -------
+            a: int
+                The first agent
+            b: int
+                The second agent
+            
+        Returns:
+            
             The distance between the two agents that were input
         """ 
         return (((a._x - b._x)**2) +
@@ -138,11 +126,10 @@ class Agent:
         neighbourhood distance takes the average of their store value. Both 
         agents' store value is then set to the average
         
-        Parameters
-        ----------
-        neighbourhood: int
-            The maximum distance to other agents that will result in resources 
-            being shared
+        Parameters:
+            neighbourhood: int
+                The maximum distance to other agents that will result in resources 
+                being shared
         """
         for agent in self.agents:
             if self.idnum != agent.idnum:
@@ -152,13 +139,12 @@ class Agent:
                     avg = total / 3
                     self.store = avg
                     agent.store = avg
-
-# https://stackoverflow.com/questions/37209921/python-how-not-to-sort-sphinx-output-in-alphabetical-order
+                    
 
     def split(self):
         """
         Creates a new agent and splits the "Parent's" store evenly with the 
-        "Child"
+        new agent
         """
         # Create the new agent and set the id number as the next number along
         # use the next value from the web page for its x and y coordinates
