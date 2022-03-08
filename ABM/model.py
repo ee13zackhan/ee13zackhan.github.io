@@ -24,18 +24,20 @@ neighbourhood = 20
 agents = []
 stop = False
 fig = pt.figure(figsize=(8,8))
-ax = fig.add_axes([0, 0, 1, 1])
+# ax = fig.add_axes([0, 0, 1, 1])
 
 # Calling the make_enviro() function from enviro.py
 raster = enviro.make_enviro("in.txt")
 
+# Get x and y data from the webpage below
 r = requests.get('http://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html')
 content = r.text
 soup = bs4.BeautifulSoup(content, 'html.parser')
+# Create an array each for the x and y values (includes HTML)
 td_ys = soup.find_all(attrs={"class" : "y"})
 td_xs = soup.find_all(attrs={"class" : "x"})
 
-# Make the agents.
+# Make the agents using the values from the td_ys and td_xs as the starting position
 for i in range(initial):
     y = int(td_ys[i].text)
     x = int(td_xs[i].text)
@@ -66,22 +68,23 @@ def update(frame_number):
     random.shuffle(agents)
 
     # Actions (methods) that each agent completes every iteration
-    #for i in range(agentframework.Agent.num_agents):
     for i in range(len(agents)):
         if agents[i].alive == True: 
             agents[i].move()
             agents[i].eat()
             agents[i].share_with_neighbours(neighbourhood)
             
+            # Actions that require a certain age go here
             if agents[i].age >= 4:
                 agents[i].reproduce()
                 agents[i].die()
             
+            # Make the agents age 1 unit
             agents[i].age += 1
             
             # Create the scatter plots limits
-            pt.xlim(0, 300)
-            pt.ylim(0, 300)
+            pt.xlim(0, 100)
+            pt.ylim(0, 100)
             
             # Plots for those who died this iteration
             if agents[i].alive == False:
@@ -91,12 +94,11 @@ def update(frame_number):
             else:
                 pt.scatter(agents[i].y,agents[i].x,color="white")
         
-        # Plots for previously dead (may be better without?)
+        # Plots for previously dead
         # elif agents[i].alive == False:
         #     pt.scatter(agents[i].y,agents[i].x,color=agents[i].colour,marker="x",alpha=0.5)
         
     # Change stop to True if conditions are met for all agents
-    # stop = all(agents[i].store <= 500 for i in range(agentframework.Agent.num_agents))
     stop = all(agents[i].alive == False for i in range(len(agents)))
     
     pt.imshow(raster)

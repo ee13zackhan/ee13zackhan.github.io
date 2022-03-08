@@ -62,7 +62,7 @@ class Agent:
         """
         self._idnum = i
         if (x == None):
-            self._x = random.randint(0,300)
+            self._x = random.randint(0,100)
         else:
             self._x = x
         if (y == None):
@@ -82,19 +82,21 @@ class Agent:
         """
         Randomly moves the agent by one step or stays still
         """ 
+        # Random walk in the y direction
         rand_y = random.random()
         if rand_y < 0.33:
-            self._y = (self._y + 1) % 300
+            self._y = (self._y + 1) % 100
         elif 0.33 <= rand_y < 0.66:
-            self._y = (self._y - 1) % 300
+            self._y = (self._y - 1) % 100
         else:
             pass
-
+        
+        # Random walk in the x direction
         rand_x = random.random()
         if rand_x < 0.33:
-            self._x = (self._x + 1) % 300
+            self._x = (self._x + 1) % 100
         elif 0.33 <= rand_x < 0.66:
-            self._x = (self._x - 1) % 300
+            self._x = (self._x - 1) % 100
         else:
             pass
     
@@ -157,16 +159,20 @@ class Agent:
         """
         Creates a new agent and splits the "Parent's" store evenly with the 
         "Child"
-        """        
+        """
+        # Create the new agent and set the id number as the next number along
+        # use the next value from the web page for its x and y coordinates
         newid = len(self.agents)
         xs = int(self.xs[newid].text)
         ys = int(self.ys[newid].text)
         self.agents.append(Agent(newid, self.environment, self.agents, self.ys, self.xs, ys, xs))
         
+        # To split the store between the "parent" and "child"
         avg = self.store / 2
         self.store = avg
         self.agents[newid].store = avg
         
+        # To make the "child" spawn at the same location as the "parent"
         # self.agents[newid]._x = self._x
         # self.agents[newid]._y = self._y
         
