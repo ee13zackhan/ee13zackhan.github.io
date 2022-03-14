@@ -82,9 +82,6 @@ def update(frame_number):
             # Make the agents age 1 unit
             agents[i].age += 1
             
-            # Create the scatter plots limits
-            pt.xlim(0, 100)
-            pt.ylim(0, 100)
             
             # Plots for those who died this iteration
             if agents[i].alive == False:
