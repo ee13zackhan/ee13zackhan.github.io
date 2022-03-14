@@ -47,7 +47,12 @@ make_raster("best_transport.txt", transport)
 make_raster("best_population.txt", population)
 
 
+# Check they are being read properly
 
 # pt.imshow(geology)
-pt.imshow(transport)
+# pt.imshow(transport)
 # pt.imshow(population)
+
+# Merge the maps together into one map
+
+for row in range(len)
