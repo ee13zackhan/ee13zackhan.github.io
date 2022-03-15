@@ -9,6 +9,8 @@ This is a temporary script file.
 import numpy as np
 # test = []
 
+### Making raster test
+
 # def make_raster(file_path, array):
 #     """
 #     A function which returns a list containing the environment raster data
@@ -41,27 +43,28 @@ import numpy as np
 
 # pt.imshow(test)
 
+### Using NumPy test
+
 # array1 = np.array([1,1,1,1],[2,2,2,2])
 # array2 = np.array([1,1,1,1])
 # array3 = np.append(array1, array2)
 # print(array3)
 
-array1 = [[1,3,1,0],[1,2,3,4]]
-array2 = [[1,1,6,1],[4,3,2,1]]
-array3 = []
-temp = 0
-for row in range(len(array1)):
-    if temp != 0:
-        array3.append(temp)
-    temp = []
-    for i in range(len(array1[row])):
-        val = array1[row][i] + array2[row][i]
-        # print(val)
-        temp.append(val)
-        # print(temp)
-print(array3)
+### Adding arrays without NumPy test
 
-# the code only appends the sum of the first lists within array1 and array2
-# it doesnt append the second (although im pretty sure it does calculate it)
-# i think it doesnt go back into the first for loop after changing val so it
-# doesnt get appended. figure out how to fix it or try and make numpy arrays work
+# array1 = [[1,3,1,0],[1,2,3,4],[1,1,1]]
+# array2 = [[1,1,6,1],[4,3,2,1],[1,1,1]]
+# array3 = []
+# for row in range(len(array1)):
+#     temp = []
+#     for i in range(len(array1[row])):
+#         val = array1[row][i] + array2[row][i]
+#         # print(val)
+#         temp.append(val)
+#         # print(temp)
+#     array3.append(temp)
+# print(array3)
+
+array4 = np.array([1,2])
+array5 = [3,4]
+array6 = np.append(array4, array5)
