@@ -12,17 +12,35 @@ import matplotlib.pyplot as pt
 import matplotlib.animation as an
 import requests
 import bs4
+import random
 
 import agentframework
 import enviro
 
+
+
+# Change the required debugging variable to true when debugging. This will 
+# cause information to be printed to the console to aid with debugging and 
+# checking if the code works as expected
+WEB = False
+ITERATIONS = False
+AGENTS = False
+SHUFFLE = False
+COORD = True
+
 # Outlining the starting and stopping conditions of the model and creating
 # variables that wil be used throughout
 initial = 20
+if AGENTS == True:
+    print(f"The initial number of agents is set to {initial}")
 num_of_iterations = 100
+if ITERATIONS == True:
+    print(f"The max number of iterations is {num_of_iterations}")
 neighbourhood = 20
 agents = []
 stop = False
+if ITERATIONS == True:
+    print(f"stop is initially {stop}")
 fig = pt.figure(figsize=(8,8))
 ax = fig.add_axes([0, 0, 1, 1])
 
@@ -36,15 +54,35 @@ soup = bs4.BeautifulSoup(content, 'html.parser')
 # Create an array each for the x and y values (includes HTML)
 td_ys = soup.find_all(attrs={"class" : "y"})
 td_xs = soup.find_all(attrs={"class" : "x"})
+if WEB == True:
+    print(f"The first td_ys value is: {td_ys[0]}")
+    print(f"The first td_xs value is: {td_xs[0]}")
 
 # Make the agents using the values from the td_ys and td_xs as the starting position
 for i in range(initial):
-    # Read the x and y values from the arrays as an integer (ignoring HTML)
+    # Read the x and y values from the arrays as an integer and ignoring HTML
     y = int(td_ys[i].text)
     x = int(td_xs[i].text)
+    if WEB == True:
+        print(f"The starting coordinates are ({x},{y}) for agent {i}")
     agents.append(agentframework.Agent(i, raster, agents, td_ys, td_xs, y, x))
-
-# A function to make each frame of the model/animation
+    
+    
+if COORD == True:
+    for i in range(len(agents)):
+        ix = agents[i].x
+        iy = agents[i].y
+        print(f"The initial coordinates for agent {i} are ({ix},{iy})")
+    
+if AGENTS == True:
+    print(f"There are actually {len(agents)} agent(s)")
+    
+if SHUFFLE == True:
+    initial_order = []
+    for i in range(len(agents)):
+        initial_order.append(agents[i].idnum)
+    print(f"The initial order of agents is {initial_order}")
+    
 def update(frame_number):
     """
     A function to complete all the actions needed for each frame of the model 
@@ -63,11 +101,17 @@ def update(frame_number):
     """
     global stop
     fig.clear()
-    
-    # Randomise the order of agents
-    # random.shuffle(agents)
 
-    # Actions (methods) that each agent completes every iteration
+    # Randomise the order of agents
+    random.shuffle(agents)
+    if SHUFFLE == True:
+        order = []
+        for i in range(len(agents)):
+            order.append(agents[i].idnum)
+        print("The order of agents for this iteration is:")
+        print(order)
+
+    # Actions (methods) that living agents complete every iteration
     for i in range(len(agents)):
         if agents[i].alive == True: 
             agents[i].move()
@@ -97,7 +141,7 @@ def update(frame_number):
         
     # Change stop to True if conditions are met for all agents
     stop = all(agents[i].alive == False for i in range(len(agents)))
-    
+
     pt.imshow(raster)
     
 def stopping():
@@ -112,8 +156,13 @@ def stopping():
 
     """
     a=0
+    
     while (a<num_of_iterations) & (not stop):
+
         yield a
+        if ITERATIONS == True:
+            print(f"Iteration: {a}")
+            print(f"stop is {stop}")
         a += 1
     
 # Create and show animation of agents
