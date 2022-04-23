@@ -1,20 +1,53 @@
 <!DOCTYPE html>
 <head>
-    200779106 Home Page
+    <style>
+        body    {text-align: center;}
+        p       {margin-left: 300px;
+                margin-right: 300px;
+                font-size: large;}
+        .intro  {font-size: large;}
+    </style>
+    <h1>200779106 Home Page</h1>
 </head>
 
 <body>
-    Hello, I am student 200779106 at Leeds University and I am studying MSc GIS
-    Follow my programming journey here
+    <div class="intro">Hi, I'm student 200779106 at Leeds University and I am studying MSc GIS</div>
+    <div class="intro">Feel free to look around my webpage</div>
 
-    <h1>Portfolio</h1>
+    <h3>Portfolio</h3>
 
+    <div>
+        <p>
+            This is the area for my portfolio submission. The submission entails an Agent Based Model 
+            (ABM). The ABM code is written in Python and when run displays some agents who 
+            move, eat, reproduce (asexually, similar to bacteria) and die
+        </p> 
+            
+        <p>
+            The model is in the file "model.py". The starting coordinates are taken from a
+            <a href="https://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html">
+            website</a> as requested in the practical notes. The movement of the agents is in a random 
+            direction, or they stay still. When they eat, a set amount is subtracted from the environment 
+            and added to the agents store. Reproduction and death occur with varying degrees of 
+            probability depending on age and store value of the agent
+        </p>
+
+        <p>
+            The environment is a raster and in a file called "in.txt". It is read into the model 
+            through the module called "enviro.py". There is also a class used to store all the agents'
+            data and methods in a module called "agentframework.py"
+        </p>
+    </div>
+    
     <div>Click <a href="/200779106_Portfolio.zip" download>here</a> to download files for my Agent Based 
     Model (Open the README file)</div>
 
-    <div>Click <a href="./ABM/_build/docindex.html">here</a> for a link to the Documentation regarding the 
+    <div>Click <a href="./ABM/_build/index.html">here</a> for a link to the Documentation regarding the 
     Model</div>
     
-    <div>Click here (coming soon) to donload files for my Project</div>
+    <h3>Project</h3>
+    
+    <div>Coming Soon</div>
+    <!--<div>Click here (coming soon) to download files for my Project</div>-->
     
 </body>

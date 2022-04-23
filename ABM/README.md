@@ -5,13 +5,35 @@
 
  How to use
 
- To use the agent based model open up the "model.py" file in a puthon IDE
+ In the current folder there are two folders, Model and Documentation. The
+ Documentation folder contains all the files used to create the model's
+ documentation along with the html files for the actual documentation.
+ The Model folder includes just the files needed for the model
+
+ To run the agent based model open up the "model.py" file in a python IDE
  (I recommend Spyder). When you run the model, two windows will pop up,
  and on one of them it will have a drop down menu called "Model". Click
- on the model then click "Run" and you will see the model animation begin
+ on that then click "Run Model" and you will see the model animation begin
  to run. You can close the windows and stop the model if it hasn't already.
- Feel free to change some of the initial parameters if you wuld like to
- experiment.
+ Feel free to change some of the initial parameters if you would like to
+ experiment
 
- If you would like some more information on how the model works, there is
- some documentation available on my webiste https://ee13zackhan.github.io/
+This is the area for my portfolio submission. The submission entails an Agent Based Model
+(ABM). The ABM code is written in Python and when run displays some agents who
+move, eat, reproduce (asexually, similar to bacteria) and die
+
+The model is in the file "model.py". The starting coordinates are taken from a website
+(https://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html)
+as requested in the practical notes. The movement of the agents is in a random
+direction, or they stay still. When they eat, a set amount is subtracted from the environment
+and added to the agents store. Reproduction and death occur with varying degrees of
+probability depending on age and store value of the agent
+
+The environment is a raster and in a file called "in.txt". It is read into the model
+through the module called "enviro.py". There is also a class used to store all the agents'
+data and methods in a module called "agentframework.py"
+
+ If you would like some more information on how the model works, the
+ documentation is available on my webiste https://ee13zackhan.github.io/
+ or alternatively you can open the webpages locally through the
+ documentation folder
