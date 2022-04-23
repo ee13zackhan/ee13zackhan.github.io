@@ -19,14 +19,16 @@ import enviro
 
 
 
-# Change the required debugging variable to true when debugging. This will 
+# Change the required debugging variable to True when debugging. This will 
 # cause information to be printed to the console to aid with debugging and 
 # checking if the code works as expected
+# Debugging Variables:
 WEB = False
 ITERATIONS = False
 AGENTS = False
 SHUFFLE = False
-COORD = True
+COORD = False
+# random.seed(1)
 
 # Outlining the starting and stopping conditions of the model and creating
 # variables that wil be used throughout
