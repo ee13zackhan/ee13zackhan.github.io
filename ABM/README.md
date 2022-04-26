@@ -34,8 +34,8 @@ through the module called "enviro.py". There is also a class used to store all t
 data and methods in a module called "agentframework.py"
 
 If you would like some more information on how the model works, the
-documentation is available on my webiste (Connection to Leeds University Network Required) https://ee13zackhan.github.io/
-or alternatively you can open the webpages locally through the
+documentation is available on my webiste (Connection to Leeds University Network Required)
+https://ee13zackhan.github.io/ or alternatively you can open the webpages locally through the
 documentation folder
 
 If you would like to use or reproduce the model please read and abide by the LICENSE file
