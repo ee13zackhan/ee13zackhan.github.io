@@ -1,30 +1,28 @@
 # ABM
- Agent based modelling for programming course
+Agent based modelling for programming course
 
- This is my Agent Based Model for GEOG5990. My student ID is 200779106
+This is my Agent Based Model (ABM) for GEOG5990. My student ID is 200779106
 
- How to use
+How to use
 
- In the current folder there are two folders, Model and Documentation. The
- Documentation folder contains all the files used to create the model's
- documentation along with the html files for the actual documentation.
- The Model folder includes just the files needed for the model
+In the current folder there are three folders, Model Docbuild and Documentation. 
+The DocBuild folder contains all the files used to create the model's
+documentation. The Documentation folder contains the html files for the documentation.
+The Model folder includes just the files needed for the model
 
- To run the agent based model open up the "model.py" file in a python IDE
- (I recommend Spyder). When you run the model, two windows will pop up,
- and on one of them it will have a drop down menu called "Model". Click
- on that then click "Run Model" and you will see the model animation begin
- to run. You can close the windows and stop the model if it hasn't already.
- Feel free to change some of the initial parameters if you would like to
- experiment
+To run the agent based model open up the "model.py" file in a python IDE
+(I recommend Spyder). When you run the model, two windows will pop up,
+and on one of them it will have a drop down menu called "Model". Click
+on that then click "Run Model" and you will see the model animation begin
+to run. You can close both windows and stop the model if it hasn't already.
+Feel free to change some of the initial parameters if you would like to
+experiment
 
-This is the area for my portfolio submission. The submission entails an Agent Based Model
-(ABM). The ABM code is written in Python and when run displays some agents who
+The ABM code is written in Python and when run displays some agents who
 move, eat, reproduce (asexually, similar to bacteria) and die
 
-The model is in the file "model.py". The starting coordinates are taken from a website
-(https://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html)
-as requested in the practical notes. The movement of the agents is in a random
+The starting coordinates for each agent are taken from a website, as requested in the practical notes, 
+or are random when the list finishes. The movement of the agents is in a random
 direction, or they stay still. When they eat, a set amount is subtracted from the environment
 and added to the agents store. Reproduction and death occur with varying degrees of
 probability depending on age and store value of the agent
@@ -38,4 +36,4 @@ documentation is available on my webiste (Connection to Leeds University Network
 https://ee13zackhan.github.io/ or alternatively you can open the webpages locally through the
 documentation folder
 
-If you would like to use or reproduce the model please read and abide by the LICENSE file
+Please read the LICENSE file.
