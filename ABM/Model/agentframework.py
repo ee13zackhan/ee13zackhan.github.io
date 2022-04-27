@@ -49,14 +49,8 @@ class Agent:
                 The colour that will be used when plotting/animating the agent
         """
         self._idnum = i
-        if (x == None):
-            self._x = random.randint(0,100)
-        else:
-            self._x = x
-        if (y == None):
-            self._y = random.randint(0,100)
-        else:
-            self._y = y
+        self._x = x
+        self._y = y
         self.environment = environment
         self.store = 0
         self.agents = agents
@@ -132,13 +126,14 @@ class Agent:
                 being shared
         """
         for agent in self.agents:
-            if self.idnum != agent.idnum:
-                distance = self.distance_between(agent)
-                if (distance <= neighbourhood):
-                    total = self.store + agent.store
-                    avg = total / 3
-                    self.store = avg
-                    agent.store = avg
+            if agent.alive == True:
+                if self.idnum != agent.idnum:
+                    distance = self.distance_between(agent)
+                    if (distance <= neighbourhood):
+                        total = self.store + agent.store
+                        avg = total / 3
+                        self.store = avg
+                        agent.store = avg
                     
 
     def split(self):
@@ -149,9 +144,15 @@ class Agent:
         # Create the new agent and set the id number as the next number along
         # use the next value from the web page for its x and y coordinates
         newid = len(self.agents)
-        xs = int(self.xs[newid].text)
-        ys = int(self.ys[newid].text)
-        self.agents.append(Agent(newid, self.environment, self.agents, self.ys, self.xs, ys, xs))
+        if newid < 100:
+            xs = int(self.xs[newid].text)
+            ys = int(self.ys[newid].text)
+            self.agents.append(Agent(newid, self.environment, self.agents, self.ys, self.xs, ys, xs))
+        # When the list of coords finishes, use random coords
+        else:
+            xs = random.randint(0,100)
+            ys = random.randint(0,100)
+            self.agents.append(Agent(newid, self.environment, self.agents, self.ys, self.xs, ys, xs))
         
         # To split the store between the "parent" and "child"
         avg = self.store / 2

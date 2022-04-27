@@ -24,8 +24,8 @@ import enviro
 # checking if the code works as expected
 # Debugging Variables:
 WEB = False
-ITERATIONS = False
-AGENTS = False
+ITERATIONS = True
+AGENTS = True
 SHUFFLE = False
 COORD = False
 # random.seed(1)
