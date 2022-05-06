@@ -5,8 +5,12 @@ Created on Mon Mar 14 17:01:51 2022
 @author: 200779106
 """
 import csv
+# Set Matplotlib to use TkInter backend
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-import numpy as np
+import tk9inter as tk
+# import numpy as np
 
 # Create variables to hold the rasterdata from each file
 geology = []
@@ -178,7 +182,11 @@ plt.imshow(final)
 #         # print(temp)
 #     combined.append(temp)
 
+root = tk.Tk()
 
+
+
+root.mainloop()
 
 
 
