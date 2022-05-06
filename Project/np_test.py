@@ -4,12 +4,12 @@ Spyder Editor
 
 This is a temporary script file.
 """
-# import csv
-# import matplotlib.pyplot as pt
+import csv
+import matplotlib.pyplot as pt
 import numpy as np
-# test = []
+test = []
 
-### Making raster test
+## Making raster test
 
 # def make_raster(file_path, array):
 #     """
@@ -39,18 +39,18 @@ import numpy as np
 #     f.close()
 
 
-# make_raster("M:/MSc/Programming/Project/test.txt", test)
+# make_raster("test.txt", test)
 
 # pt.imshow(test)
 
-### Using NumPy test
+## Using NumPy test
 
 # array1 = np.array([1,1,1,1],[2,2,2,2])
 # array2 = np.array([1,1,1,1])
 # array3 = np.append(array1, array2)
 # print(array3)
 
-### Adding arrays without NumPy test
+## Adding arrays without NumPy test
 
 # array1 = [[1,3,1,0],[1,2,3,4],[1,1,1]]
 # array2 = [[1,1,6,1],[4,3,2,1],[1,1,1]]
@@ -65,6 +65,22 @@ import numpy as np
 #     array3.append(temp)
 # print(array3)
 
-array4 = np.array([1,2])
-array5 = [3,4]
-array6 = np.append(array4, array5)
+# array4 = np.array([1,2])
+# array5 = [3,4]
+# array6 = np.append(array4, array5)
+
+
+## multiplying arrays with a multiplier test
+
+array7 = [[1,3,1,0],[1,2,3,4],[1,1,1,1]]
+mult = 2
+array8 = []
+for row in range(len(array7)):
+    temp = []
+    for i in range(len(array7[row])):
+        val = array7[row][i] * mult
+        # print(val)
+        temp.append(val)
+        # print(temp)
+    array8.append(temp)
+print(array8)
