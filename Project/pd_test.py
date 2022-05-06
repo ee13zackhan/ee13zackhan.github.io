@@ -16,7 +16,7 @@ random.seed(1)
 # obj = Series(rstr, index=["a","b","c","d"])
 # print(obj["d"])
 
-rstr = []
+# rstr = []
 
 
 def make_enviro(file_path):
@@ -33,14 +33,22 @@ def make_enviro(file_path):
         
         rstr : list
             A 2D list containing the environment raster data
-    """
-    f = open(file_path, newline='')
-    reader = csv.reader(f,quoting=csv.QUOTE_NONNUMERIC)
+    # """
+    # f = open(file_path, newline='')
+    # reader = csv.reader(f,quoting=csv.QUOTE_NONNUMERIC)
     
-    for row in reader:
-        rstr = Series(row)
+    # for row in reader:
+    #     rstr = Series(row)
         
         
-    f.close()
+    # f.close()
+    df = pd.read_csv(file_path, header=None )
+    # return df.describe()
     
-    return rstr
+    return df
+
+rstr = make_enviro("test.txt")
+
+mult = rstr / 2
+
+# final = rstr + mult

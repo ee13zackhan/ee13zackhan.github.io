@@ -9,39 +9,43 @@ import matplotlib.pyplot as pt
 import numpy as np
 test = []
 
-## Making raster test
+# Making raster test
 
-# def make_raster(file_path, array):
-#     """
-#     A function which returns a list containing the environment raster data
+def make_raster(file_path, array):
+    """
+    A function which returns a list containing the environment raster data
 
-#     Parameters:
+    Parameters:
         
-#         file_path: .csv file
-#             A comma seperated value file containing environment data for the agents 
-#             to interact with e.g. food for agents to eat
+        file_path: .csv file
+            A comma seperated value file containing environment data for the agents 
+            to interact with e.g. food for agents to eat
             
-#         array: list
-#             The array to which the raster data will be appended
+        array: list
+            The array to which the raster data will be appended
 
-#     Returns:
+    Returns:
         
-#         array: 2D list
-#             The updated input array
-#     """
+        array: 2D list
+            The updated input array
+    """
     
-#     f = open(file_path, newline='')
-#     reader = csv.reader(f,quoting=csv.QUOTE_NONNUMERIC)
+    f = open(file_path, newline='')
+    reader = csv.reader(f,quoting=csv.QUOTE_NONNUMERIC)
     
-#     for row in reader:
-#         array.append(row)
+    for row in reader:
+        array.append(row)
         
-#     f.close()
+    f.close()
 
 
-# make_raster("test.txt", test)
+make_raster("test.txt", test)
 
-# pt.imshow(test)
+ar1 = np.array(test)
+
+ar2 = ar1 * 5
+
+pt.imshow(ar2)
 
 ## Using NumPy test
 
@@ -72,15 +76,16 @@ test = []
 
 ## multiplying arrays with a multiplier test
 
-array7 = [[1,3,1,0],[1,2,3,4],[1,1,1,1]]
-mult = 2
-array8 = []
-for row in range(len(array7)):
-    temp = []
-    for i in range(len(array7[row])):
-        val = array7[row][i] * mult
-        # print(val)
-        temp.append(val)
-        # print(temp)
-    array8.append(temp)
-print(array8)
+# array7 = [[1,3,1,0],[1,2,3,4],[1,1,1,1]]
+# mult = 2
+# array8 = []
+# for row in range(len(array7)):
+#     temp = []
+#     for i in range(len(array7[row])):
+#         val = array7[row][i] * mult
+#         # print(val)
+#         temp.append(val)
+#         # print(temp)
+#     array8.append(temp)
+# print(array8)
+

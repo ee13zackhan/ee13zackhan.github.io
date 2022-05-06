@@ -12,13 +12,15 @@ import matplotlib.pyplot as plt
 from tkinter import Frame, Button, Scale
 import tkinter as tk
 from tkinter import ttk
+import numpy as np
+import pandas as pd
 
 # import numpy as np
 
 # Create variables to hold the rasterdata from each file
-geology = []
-transport = []
-population = []
+geology = np.array()
+transport = np.array()
+population = np.array()
 
 # Create a function to read files
 
@@ -50,7 +52,7 @@ population = []
     
 #     return array
 
-def make_raster(file_path, array):
+def make_raster(file_path, ar):
     """
     A function which returns a list containing the environment raster data
 
@@ -69,15 +71,17 @@ def make_raster(file_path, array):
     reader = csv.reader(f,quoting=csv.QUOTE_NONNUMERIC)
     
     for row in reader:
-        array.append(row)
+        ar.append(row)
         
     f.close()
     
-    return array
+    return np.array(ar)
 
 make_raster("best_geology.txt", geology)
 make_raster("best_transport.txt", transport)
 make_raster("best_population.txt", population)
+
+print(geology)
 
 # Check for geology
 # if geology != []:
@@ -139,26 +143,31 @@ def add_3_rasters(raster1, raster2, raster3):
 
 def spl(raster1, raster2, raster3):
     
-    geo_bool = bool(slider1.get())
-    print(geo_bool)
-    pop_bool = bool(slider2.get())
-    print(pop_bool)
-    tra_bool = bool(slider3.get())
-    print(tra_bool)
-    true = 0
-    if geo_bool == True:
-        true +=1
-    if pop_bool == True:
-        true +=1
-    if tra_bool == True:
-        true +=1
-    print(true)
+    # geo_bool = bool(slider1.get())
+    # # print(geo_bool)
+    # pop_bool = bool(slider2.get())
+    # # print(pop_bool)
+    # tra_bool = bool(slider3.get())
+    # # print(tra_bool)
     
-def adv():
+    geo = multiplier(geology, slider1.get())
+    pop = multiplier(population, slider2.get())
+    tra = multiplier(transport, slider3.get())
     
-    geo_multiplier = slider1.get()/100
-    pop_multiplier = slider2.get()/100
-    tra_multiplier = slider3.get()/100
+    slider_sum = slider1.get() + slider2.get() + slider3.get()
+    # print(slider_sum)
+    
+    added = add_3_rasters(geo, pop, tra)
+        
+    output_raster = multiplier(added, 1/slider_sum)
+    
+    return output_raster
+    
+# def adv():
+    
+#     geo_multiplier = slider1.get()/100
+#     pop_multiplier = slider2.get()/100
+#     tra_multiplier = slider3.get()/100
     
 
 # mult = 2
@@ -235,13 +244,13 @@ slider2 = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizont
 slider3 = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal").pack()
 
 
-btn1 = Button(simple, text="Run", command=spl).pack()
+btn1 = Button(simple, text="Run").pack()
 
 slider4 = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal").pack()
 slider5 = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal").pack()
 slider6 = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal").pack()
 
-btn2 = Button(advanced, text="Run", command=adv).pack()
+btn2 = Button(advanced, text="Run").pack()
 
 # menu_bar = tkinter.Menu(root)
 # root.config(menu=menu_bar)
