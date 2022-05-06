@@ -9,7 +9,10 @@ import csv
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-import tk9inter as tk
+from tkinter import Frame, Button, Scale
+import tkinter as tk
+from tkinter import ttk
+
 # import numpy as np
 
 # Create variables to hold the rasterdata from each file
@@ -134,6 +137,29 @@ def add_3_rasters(raster1, raster2, raster3):
         added.append(temp)
     return added
 
+def spl(raster1, raster2, raster3):
+    
+    geo_bool = bool(slider1.get())
+    print(geo_bool)
+    pop_bool = bool(slider2.get())
+    print(pop_bool)
+    tra_bool = bool(slider3.get())
+    print(tra_bool)
+    true = 0
+    if geo_bool == True:
+        true +=1
+    if pop_bool == True:
+        true +=1
+    if tra_bool == True:
+        true +=1
+    print(true)
+    
+def adv():
+    
+    geo_multiplier = slider1.get()/100
+    pop_multiplier = slider2.get()/100
+    tra_multiplier = slider3.get()/100
+    
 
 # mult = 2
 # pop_mult = []
@@ -162,13 +188,13 @@ geo_mult = multiplier(geology, 0.33)
 tra_mult = multiplier(transport, 0.33)
 pop_mult = multiplier(population, 0.33)
 
-plt.imshow(geo_mult)
-plt.imshow(tra_mult)
-plt.imshow(pop_mult)
+# plt.imshow(geo_mult)
+# plt.imshow(tra_mult)
+# plt.imshow(pop_mult)
 
 final = add_3_rasters(geo_mult, tra_mult, pop_mult)
 
-plt.imshow(final)
+# plt.imshow(final)
 
 # Adding arrays
 
@@ -183,10 +209,48 @@ plt.imshow(final)
 #     combined.append(temp)
 
 root = tk.Tk()
+root.title("Site Locator")
+root.geometry("500x500")
+
+my_notebook = ttk.Notebook(root)
+my_notebook.pack()
 
 
+simple = Frame(my_notebook, width=500, height=500)
+advanced = Frame(my_notebook, width=500, height=500)
 
-root.mainloop()
+simple.pack(fill="both", expand=1)
+advanced.pack(fill="both", expand=1)
+
+my_notebook.add(simple, text="Simple")
+my_notebook.add(advanced, text="Advanced")
+
+
+# root.wm_title("Site Locator")
+# canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig,master=root)
+# canvas._tkcanvas.pack(side=tkinter.TOP,fill=tkinter.BOTH,expand=1)
+
+slider1 = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal").pack()
+slider2 = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal").pack()
+slider3 = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal").pack()
+
+
+btn1 = Button(simple, text="Run", command=spl).pack()
+
+slider4 = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal").pack()
+slider5 = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal").pack()
+slider6 = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal").pack()
+
+btn2 = Button(advanced, text="Run", command=adv).pack()
+
+# menu_bar = tkinter.Menu(root)
+# root.config(menu=menu_bar)
+# model_menu = tkinter.Menu(menu_bar)
+# menu_bar.add_cascade(label="Model", menu=model_menu)
+# model_menu.add_command(label="Run Model")
+
+
+tk.mainloop()
 
 
 
