@@ -9,11 +9,12 @@ Created on Thu May  5 15:48:54 2022
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-from tkinter import Frame, Button, Scale
+from tkinter import Frame, Button, Scale, Canvas
 import tkinter as tk
 from tkinter import ttk
 # import numpy as np
 import pandas as pd
+# from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 # Create dataframe to hold the rasterdata from each file
@@ -36,12 +37,23 @@ def smpl():
     added_df = geo_mult + pop_mult + tra_mult
     
     slider_sum = geo_slider_simp.get() + pop_slider_simp.get() + tra_slider_simp.get()
-    print(slider_sum)
+    # print(slider_sum)
     
     output_df = added_df/slider_sum
+
     
-    plt.imshow(output_df)
+
+    # canvas_simp.draw()
+    # show_me(output_df)
+    
+    # mycanvas = Canvas(simple)
+    # mycanvas.grid(column=1, row=5)
+    
+    # mycanvas.create_image(0,0, image=output_df)
+    
+    # plt.imshow(output_df)
     # return output_df
+    
     
     ###### Double check that the above function is working as intended
 
@@ -52,10 +64,14 @@ def adv():
     
     output_df = geo_mult + pop_mult + tra_mult
     
-    plt.imshow(output_df)
+    # plt.imshow(output_df)
     # return output_df
 
     ######   Double check that the above function is working as intended
+
+# def show_me(df):
+#     return plt.imshow(df)
+    
 
 # GUI
 root = tk.Tk()
@@ -77,29 +93,60 @@ my_notebook.add(advanced, text="Advanced")
 
 
 # root.wm_title("Site Locator")
-# canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig,master=root)
-# canvas._tkcanvas.pack(side=tkinter.TOP,fill=tkinter.BOTH,expand=1)
+
+# Simple Tab
+
+simple_fig = plt.Figure(figsize=(6,5), dpi=100)
+
+geo_lbl_simp = tk.Label(simple, text="Geology")
+pop_lbl_simp = tk.Label(simple, text="Population")
+tra_lbl_simp = tk.Label(simple, text="Transport")
 
 geo_slider_simp = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal")
 pop_slider_simp = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal")
 tra_slider_simp = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal")
 
-geo_slider_simp.pack()
-pop_slider_simp.pack()
-tra_slider_simp.pack()
+btn1 = Button(simple, text="Run", command=smpl)
 
-btn1 = Button(simple, text="Run", command=smpl).pack() # may have to split this into two like above if get error
+canvas_simp = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(simple_fig, master=simple)
+# Commetn above line
 
+geo_lbl_simp.grid(column=0, row=0)
+pop_lbl_simp.grid(column=0, row=1)
+tra_lbl_simp.grid(column=0, row=2)
+
+geo_slider_simp.grid(column=1, row=0)
+pop_slider_simp.grid(column=1, row=1)
+tra_slider_simp.grid(column=1, row=2)
+
+
+btn1.grid(column=1, row=3)
+
+canvas_simp._tkcanvas.grid(columnspan=3, column=0, row=4)
+# Comment above line
+
+# Advanced Tab
+
+geo_lbl_adv = tk.Label(advanced, text="Geology")
+pop_lbl_adv = tk.Label(advanced, text="Population")
+tra_lbl_adv = tk.Label(advanced, text="Transport")
 
 geo_slider_adv = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal")
 pop_slider_adv = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal")
 tra_slider_adv = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal")
 
-geo_slider_adv.pack()
-pop_slider_adv.pack()
-tra_slider_adv.pack()
+btn2 = Button(advanced, text="Run", command=adv)
 
-btn2 = Button(advanced, text="Run", command=adv).pack()
+geo_lbl_adv.grid(column=0, row=0)
+pop_lbl_adv.grid(column=0, row=1)
+tra_lbl_adv.grid(column=0, row=2)
+
+geo_slider_adv.grid(column=1, row=0)
+pop_slider_adv.grid(column=1, row=1)
+tra_slider_adv.grid(column=1, row=2)
+
+
+btn2.grid(column=1, row=3)
 
 
 
