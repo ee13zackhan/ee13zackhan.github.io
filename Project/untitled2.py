@@ -74,20 +74,24 @@ geology_ar = np.genfromtxt("best_geology.txt", delimiter=",")
 population_ar = np.genfromtxt("best_population.txt", delimiter=",")
 transport_ar = np.genfromtxt("best_transport.txt", delimiter=",")
 
+def remover(array):
+    
+    array[array<1] = 5
 
+remover(geology_ar)
 
-geo_mult = geology_ar * 1
-pop_mult = population_ar * 1
-tra_mult = transport_ar * 1
+# geo_mult = geology_ar * 1
+# pop_mult = population_ar * 1
+# tra_mult = transport_ar * 1
 
-added_df = geo_mult + pop_mult + tra_mult
+# added_df = geo_mult + pop_mult + tra_mult
 
-slider_sum = 1 + 1 + 1
-# print(slider_sum)
+# slider_sum = 1 + 1 + 1
+# # print(slider_sum)
 
-output_ar = added_df/slider_sum
+# output_ar = added_df/slider_sum
 
-plt.imshow(output_ar)
+# plt.imshow(output_ar)
 
 
 

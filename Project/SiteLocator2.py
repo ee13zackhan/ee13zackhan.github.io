@@ -13,7 +13,7 @@ import tkinter as tk
 from tkinter import Frame, Button, Scale, Checkbutton, IntVar
 from tkinter import ttk
 import numpy as np
-import pandas as pd
+# import pandas as pd
 # from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
@@ -27,6 +27,14 @@ import pandas as pd
 geology_ar = np.genfromtxt("best_geology.txt", delimiter=",")
 population_ar = np.genfromtxt("best_population.txt", delimiter=",")
 transport_ar = np.genfromtxt("best_transport.txt", delimiter=",")
+
+# def remover(array):
+    
+#     array[array<1] = -255
+
+# remover(geology_ar)
+# remover(population_ar)
+# remover(transport_ar)
 
 # plt.imshow(geology_df)
 # plt.imshow(population_df)
