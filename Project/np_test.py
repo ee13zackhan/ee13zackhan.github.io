@@ -5,9 +5,9 @@ Spyder Editor
 This is a temporary script file.
 """
 import csv
-import matplotlib.pyplot as pt
+import matplotlib.pyplot as plt
 import numpy as np
-test = []
+# test = []
 
 # Making raster test
 
@@ -39,13 +39,18 @@ def make_raster(file_path, array):
     f.close()
 
 
-make_raster("test.txt", test)
+# make_raster("test.txt", test)
 
-ar1 = np.array(test)
+test1 = np.genfromtxt("test.txt", delimiter=",")
+
+plt.imshow(test1)
+
+ar1 = np.array(test1)
 
 ar2 = ar1 * 5
 
-pt.imshow(ar2)
+# pt.imshow(ar2)
+# print(max(ar1))
 
 ## Using NumPy test
 
