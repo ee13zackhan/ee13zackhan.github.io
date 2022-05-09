@@ -1,256 +1,241 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Mar 14 17:01:51 2022
+Created on Thu May  5 15:48:54 2022
 
 @author: 200779106
 """
-import csv
-# Set Matplotlib to use TkInter backend
+
+# Set Matplotlib to use Tkinter backend
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-from tkinter import Frame, Button, Scale
 import tkinter as tk
+from tkinter import *
 from tkinter import ttk
 import numpy as np
-import pandas as pd
+# import pandas as pd
+# from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-# import numpy as np
+# Create dataframe to hold the rasterdata from each file
+# Use Pandas to read the CSV file
 
-# Create variables to hold the rasterdata from each file
-geology = np.array()
-transport = np.array()
-population = np.array()
+# geology_df = pd.read_csv("best_geology.txt", header=None)
+# population_df = pd.read_csv("best_population.txt", header=None)
+# transport_df = pd.read_csv("best_transport.txt", header=None)
 
-# Create a function to read files
+# Used Pandas, but realised it was easier to use NumPy as it has a
+# percentile Function
 
-# def make_raster(file_path, array):
-#     """
-#     A function which returns a list containing the environment raster data
+geology_ar = np.genfromtxt("best_geology.txt", delimiter=",")
+population_ar = np.genfromtxt("best_population.txt", delimiter=",")
+transport_ar = np.genfromtxt("best_transport.txt", delimiter=",")
 
-#     Parameters:
-        
-#         file_path: .csv file
-#             A comma seperated value file containing environment data for the agents 
-#             to interact with e.g. food for agents to eat
-            
-#         array: list
-#             The array to which the raster data will be appended
-
-#     Returns:
-        
-#         array: 2D list
-#             The updated input array
-#     """
-#     f = open(file_path, newline='')
-#     reader = csv.reader(f,quoting=csv.QUOTE_NONNUMERIC)
+# def remover(array):
     
-#     for row in reader:
-#         np.append(array, row)
-        
-#     f.close()
-    
-#     return array
+#     array[array<1] = -255
 
-def make_raster(file_path, ar):
+# remover(geology_ar)
+# remover(population_ar)
+# remover(transport_ar)
+
+# plt.imshow(geology_ar)
+# plt.imshow(population_ar)
+# plt.imshow(transport_ar)
+global output_ar
+global output
+
+output = False
+
+def splitter(array, percent):
     """
-    A function which returns a list containing the environment raster data
+    
 
-    Parameters:
-        
-        file_path : .csv file
-            A comma seperated value file containing environment data for the agents 
-            to interact with e.g. food for agents to eat 
+    Parameters
+    ----------
+    array : TYPE
+        DESCRIPTION.
+    percent : TYPE
+        DESCRIPTION.
 
-    Returns:
-        
-        rstr : list
-            A 2D list containing the environment raster data
+    Returns
+    -------
+    pc : TYPE
+        DESCRIPTION.
+
     """
-    f = open(file_path, newline='')
-    reader = csv.reader(f,quoting=csv.QUOTE_NONNUMERIC)
+    pc = np.percentile(array[array>0], percent)
+    # print(pc)
+    array[array<pc] = 0
     
-    for row in reader:
-        ar.append(row)
-        
-    f.close()
+    return pc
+
+def smpl():
+    global output
+    global output_ar
     
-    return np.array(ar)
+    output = True
 
-make_raster("best_geology.txt", geology)
-make_raster("best_transport.txt", transport)
-make_raster("best_population.txt", population)
-
-print(geology)
-
-# Check for geology
-# if geology != []:
-#     geo = True
-# else:
-#     geo = False
-
-# # Check for transport
-# if transport != []:
-#     tra = True
-# else:
-#     tra = False
+    matplotlib.pyplot.close()
     
-# # Check for population
-# if population != []:
-#     pop = True
-# else:
-#     pop = False
-
-# Check they are being read properly
-
-# plt.imshow(geology)
-# plt.imshow(transport)
-# plt.imshow(population)
-
-# plt.imshow(population)
-# plt.show()
-
-
-
-## multiply a map with a multiplier
-
-def multiplier(raster, multiplier):
-   
-    multiplied = []
-   
-    for row in range(len(raster)):
-        temp = []
-        for i in range(len(raster[row])):
-            val = raster[row][i] * multiplier
-            # print(val)
-            temp.append(val)
-            # print(temp)
-        multiplied.append(temp)
-       
-    return multiplied
-
-def add_3_rasters(raster1, raster2, raster3):
-    added = []
-    for row in range(len(raster1)):
-        temp = []
-        for i in range(len(raster1[row])):
-            val = raster1[row][i] + raster2[row][i] + raster3[row][i]
-            # print(val)
-            temp.append(val)
-            # print(temp)
-        added.append(temp)
-    return added
-
-def spl(raster1, raster2, raster3):
+    geo_mult = geology_ar * geo_slider_simp.get()
+    pop_mult = population_ar * pop_slider_simp.get()
+    tra_mult = transport_ar * tra_slider_simp.get()
     
-    # geo_bool = bool(slider1.get())
-    # # print(geo_bool)
-    # pop_bool = bool(slider2.get())
-    # # print(pop_bool)
-    # tra_bool = bool(slider3.get())
-    # # print(tra_bool)
+    added_df = geo_mult + pop_mult + tra_mult
     
-    geo = multiplier(geology, slider1.get())
-    pop = multiplier(population, slider2.get())
-    tra = multiplier(transport, slider3.get())
-    
-    slider_sum = slider1.get() + slider2.get() + slider3.get()
+    slider_sum = geo_slider_simp.get() + pop_slider_simp.get() + tra_slider_simp.get()
     # print(slider_sum)
     
-    added = add_3_rasters(geo, pop, tra)
-        
-    output_raster = multiplier(added, 1/slider_sum)
+    output_ar = added_df/slider_sum
     
-    return output_raster
+    # total_np = pd.DataFrame(total_df).to_numpy()
     
-# def adv():
+    top_ten = var_simp.get()
     
-#     geo_multiplier = slider1.get()/100
-#     pop_multiplier = slider2.get()/100
-#     tra_multiplier = slider3.get()/100
+    if not top_ten:
+        plt.imshow(output_ar, cmap="Greys")
+    else:
+        pc = splitter(output_ar, 90)
+        plt.imshow(output_ar, cmap="Blues", vmin=pc-1)
     
+    ###### Double check that the above function is working as intended
 
-# mult = 2
-# pop_mult = []
-# for row in range(len(population)):
-#     temp = []
-#     for i in range(len(population[row])):
-#         val = population[row][i] * mult
-#         # print(val)
-#         temp.append(val)
-#         # print(temp)
-#     pop_mult.append(temp)
+def adv():
+    global output
+    global output_ar
+    
+    output = True
+    
+    matplotlib.pyplot.close()
+    
+    geo_mult = geology_ar * (geo_slider_adv.get()/100)
+    pop_mult = population_ar * (pop_slider_adv.get()/100)
+    tra_mult = transport_ar * (tra_slider_adv.get()/100)
+    
+    output_ar = geo_mult + pop_mult + tra_mult
+    
+    top_ten = var_adv.get()
+    
+    if not top_ten:
+        plt.imshow(output_ar, cmap="Greys")
+    else:
+        pc = splitter(output_ar, 90)
+        plt.imshow(output_ar, cmap="Blues", vmin=pc-1)
 
+    #####   Double check that the above function is working as intended
 
-# geo_mult = []
-# for row in range(len(geology)):
-#     temp = []
-#     for i in range(len(geology[row])):
-#         val = geology[row][i] * mult
-#         # print(val)
-#         temp.append(val)
-#         # print(temp)
-#     geo_mult.append(temp)
+def save_output():
+    global output
+    global output_ar
+    
+    if not output:
+        messagebox.showerror("Error!", "There is no output\nUse the sliders as run button to create one first")
+    else:
+        file = filedialog.asksaveasfilename(defaultextension=".txt", title="Save File", filetypes=(("Text Files", "*.txt"), ("CSV", "*.csv")))
+        if file:
+            # Save the file
+            np.savetxt(file, output_ar, fmt="%d", delimiter=",")
 
-
-geo_mult = multiplier(geology, 0.33)
-tra_mult = multiplier(transport, 0.33)
-pop_mult = multiplier(population, 0.33)
-
-# plt.imshow(geo_mult)
-# plt.imshow(tra_mult)
-# plt.imshow(pop_mult)
-
-final = add_3_rasters(geo_mult, tra_mult, pop_mult)
-
-# plt.imshow(final)
-
-# Adding arrays
-
-# combined = []
-# for row in range(len(pop_mult)):
-#     temp = []
-#     for i in range(len(pop_mult[row])):
-#         val = pop_mult[row][i] + geo_mult[row][i]
-#         # print(val)
-#         temp.append(val)
-#         # print(temp)
-#     combined.append(temp)
-
+# GUI
 root = tk.Tk()
 root.title("Site Locator")
 root.geometry("500x500")
 
-my_notebook = ttk.Notebook(root)
-my_notebook.pack()
+notebook = ttk.Notebook(root)
+notebook.pack()
 
-
-simple = Frame(my_notebook, width=500, height=500)
-advanced = Frame(my_notebook, width=500, height=500)
+simple = Frame(notebook, width=500, height=500)
+advanced = Frame(notebook, width=500, height=500)
 
 simple.pack(fill="both", expand=1)
 advanced.pack(fill="both", expand=1)
 
-my_notebook.add(simple, text="Simple")
-my_notebook.add(advanced, text="Advanced")
-
+notebook.add(simple, text="Simple")
+notebook.add(advanced, text="Advanced")
 
 # root.wm_title("Site Locator")
-# canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig,master=root)
-# canvas._tkcanvas.pack(side=tkinter.TOP,fill=tkinter.BOTH,expand=1)
-
-slider1 = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal").pack()
-slider2 = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal").pack()
-slider3 = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal").pack()
 
 
-btn1 = Button(simple, text="Run").pack()
 
-slider4 = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal").pack()
-slider5 = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal").pack()
-slider6 = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal").pack()
 
-btn2 = Button(advanced, text="Run").pack()
+# SIMPLE TAB
+
+geo_lbl_simp = tk.Label(simple, text="Geology")
+pop_lbl_simp = tk.Label(simple, text="Population")
+tra_lbl_simp = tk.Label(simple, text="Transport")
+# ten_lbl_simp = tk.Label(simple, text="Top 10% Only")
+
+geo_slider_simp = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal")
+pop_slider_simp = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal")
+tra_slider_simp = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal")
+# ten_slider_simp = Scale(simple, from_=0, to=1, resolution=1, length=50, orient="horizontal")
+
+var_simp = IntVar()
+ten_check_simp = Checkbutton(simple, text="Top 10%", variable=var_simp)
+
+run_btn_simp = Button(simple, text="Run", command=smpl)
+sve_btn_simp = Button(simple, text="Save Output", command=save_output)
+
+# canvas_simp = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(simple_fig, master=simple)
+# Comment above line
+
+geo_lbl_simp.grid(column=0, row=0)
+pop_lbl_simp.grid(column=0, row=1)
+tra_lbl_simp.grid(column=0, row=2)
+# ten_lbl_simp.grid(column=0, row=3)
+
+geo_slider_simp.grid(column=1, row=0)
+pop_slider_simp.grid(column=1, row=1)
+tra_slider_simp.grid(column=1, row=2)
+# ten_slider_simp.grid(column=1, row=3)
+
+ten_check_simp.grid(column=1, row=3)
+
+run_btn_simp.grid(column=1, row=4)
+sve_btn_simp.grid(column=1, row=5)
+
+# out.pack(side="bottom")
+
+# canvas_simp._tkcanvas.grid(columnspan=3, column=0, row=4)
+# Comment above line
+
+
+
+
+# ADVANCED TAB
+
+geo_lbl_adv = tk.Label(advanced, text="Geology")
+pop_lbl_adv = tk.Label(advanced, text="Population")
+tra_lbl_adv = tk.Label(advanced, text="Transport")
+# ten_lbl_adv = tk.Label(advanced, text="Top 10% Only")
+
+geo_slider_adv = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal")
+pop_slider_adv = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal")
+tra_slider_adv = Scale(advanced, from_=0, to=100, resolution=1, length=300, orient="horizontal")
+# ten_slider_adv = Scale(advanced, from_=0, to=1, resolution=1, length=50, orient="horizontal")
+
+var_adv = IntVar()
+ten_check_adv = Checkbutton(advanced, text="Top 10%", variable=var_adv)
+
+run_btn_adv = Button(advanced, text="Run", command=adv)
+sve_btn_adv = Button(advanced, text="Save Output", command=save_output)
+
+geo_lbl_adv.grid(column=0, row=0)
+pop_lbl_adv.grid(column=0, row=1)
+tra_lbl_adv.grid(column=0, row=2)
+# ten_lbl_adv.grid(column=0, row=3)
+
+geo_slider_adv.grid(column=1, row=0)
+pop_slider_adv.grid(column=1, row=1)
+tra_slider_adv.grid(column=1, row=2)
+# ten_slider_adv.grid(column=1, row=3)
+
+ten_check_adv.grid(column=1, row=3)
+
+run_btn_adv.grid(column=1, row=4)
+sve_btn_adv.grid(column=1, row=5)
+
+
 
 # menu_bar = tkinter.Menu(root)
 # root.config(menu=menu_bar)
@@ -260,10 +245,3 @@ btn2 = Button(advanced, text="Run").pack()
 
 
 tk.mainloop()
-
-
-
-
-
-
-
