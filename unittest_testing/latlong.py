@@ -5,7 +5,6 @@ Created on Mon May  9 20:02:23 2022
 @author: ee13zk
 """
 
-
 class LatLong():
 
     def __init__(self):
@@ -82,32 +81,46 @@ class LatLong():
         NotSetError
         
         """
-        
-        # Raise an exception, as below, if self.long == ""
         if self.long == "":
-            raise NoLongitudeError(self.long)
+            raise NotSetError("")
+        else:
+            return self.long
         
-        return self.long
         
         
-            
-    # ----------------------------------------------------------------    
-    # Write these functions.
-    # Function: get_long_degrees: return int 0 - 180
-    # Function: get_long_direction: returns string E or W
-    # You'll also need to raise a new exception type when long = "" or long_direction = "" or long_degrees = -1.
-    # See also get_long function.
-    # ----------------------------------------------------------------
-    
         
     def get_long_degrees(self):
-        pass     
+        """Get the longitude degrees.
+        
+        Returns:
+        longitude -- int between 0 and 180.
+        
+        Raises:
+        NotSetError
+        
+        """
+        if self.long_degrees == -1:
+            raise NotSetError("")
+        else:
+            return self.long_degrees      
          
         
         
         
     def get_long_direction(self):
-        pass    
+        """Get the longitude direction.
+        
+        Returns:
+        longitude -- int between 0 and 180.
+        
+        Raises:
+        NotSetError
+        
+        """
+        if self.long_direction == "":
+            raise NotSetError("")
+        else:
+            return self.long_degrees      
 
 
 
@@ -139,7 +152,21 @@ class DirectionScrewyError(ValueError):
     def __init__(self, expression, message="Direction should be either 'E' or 'W' for longitude."):
         self.expression = expression
         self.message = message
- 
+
+       
+
+       
+class NotSetError(ValueError):
+    """Exception raised when value not set.
+    
+    Attributes:
+        expression -- input expression in which the error occurred
+        message -- explanation of the error
+    """
+
+    def __init__(self, expression, message="Value not set."):
+        self.expression = expression
+        self.message = message        
         
         
         
@@ -150,9 +177,3 @@ if __name__ == '__main__':
     a = LatLong()
     a.set_long("1000E")
     print(a.get_long())
-
-
-
-        
-
-

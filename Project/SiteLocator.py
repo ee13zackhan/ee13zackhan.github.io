@@ -13,6 +13,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 import numpy as np
+
 # import pandas as pd
 # from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
@@ -74,8 +75,9 @@ def smpl():
     global output_ar
     
     output = True
-
-    matplotlib.pyplot.close()
+    
+    if output == True:
+        matplotlib.pyplot.close()
     
     geo_mult = geology_ar * geo_slider_simp.get()
     pop_mult = population_ar * pop_slider_simp.get()
@@ -106,7 +108,8 @@ def adv():
     
     output = True
     
-    matplotlib.pyplot.close()
+    if output == True:
+        matplotlib.pyplot.close()
     
     geo_mult = geology_ar * (geo_slider_adv.get()/100)
     pop_mult = population_ar * (pop_slider_adv.get()/100)
