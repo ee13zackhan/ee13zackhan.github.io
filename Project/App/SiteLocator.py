@@ -54,14 +54,12 @@ output = False
 def splitter(array, percent):
     """
     A function designed to find the nth percentile value of a NumPy array 
-    and change the values below it to zero. The function does not change the 
-    of the arraay.
-    
-    Note: The input array will be chnaged.
+    and change the values below it to NaN. The function does not change the 
+    array, it returns a new array.
 
     Parameters
     ----------
-    array : narray
+    array : Array of float64
         The NumPy array to be changed.
     percent : Int
         The percentile value to be calculated of the array.
@@ -70,13 +68,18 @@ def splitter(array, percent):
     -------
     pc : Int
         The percentile value of the array.
+    new : Array of float64
+        A new array with the values below the pc value set to NaN.
 
     """
-    pc = np.percentile(array[array>0], percent)
-    # print(pc)
-    array[array<pc] = 0
+    new = array.copy()
     
-    return pc
+    pc = np.percentile(new[new>0], percent)
+    # print(pc)
+    
+    new[new<pc] = np.nan
+    
+    return pc, new
 
 
 def smpl():
@@ -101,14 +104,14 @@ def smpl():
     tra_mult = transport_ar * tra_slider_simp.get()
     
     # Sum all the multiplied arrays
-    added_df = geo_mult + pop_mult + tra_mult
+    added_ar = geo_mult + pop_mult + tra_mult
     
     # Sum the slider values to get the number of arrays to be merged
     slider_sum = geo_slider_simp.get() + pop_slider_simp.get() + tra_slider_simp.get()
     # print(slider_sum)
     
     # Find the average
-    output_ar = added_df/slider_sum
+    output_ar = added_ar/slider_sum
     
     # total_np = pd.DataFrame(total_df).to_numpy()
     
@@ -126,8 +129,10 @@ def smpl():
     
     # Diplays the top 10 percent of the raster in blue
     else:
-        pc = splitter(output_ar, 90)
-        plt.imshow(output_ar, cmap="Blues", vmin=pc-1)
+        pc, new = splitter(output_ar, 90)
+        plt.imshow(output_ar, cmap="Greys")
+        plt.imshow(new, cmap="Blues", vmin=pc-1)
+        plt.show()
 
 
 def adv():
@@ -156,32 +161,42 @@ def adv():
     # Find the average by summing the multilied rasters
     output_ar = geo_mult + pop_mult + tra_mult
     
-    top_ten = var_adv.get()
+    slider_sum = geo_slider_adv.get() + pop_slider_adv.get() + tra_slider_adv.get()
     
-    output = True
+    # If slider_sum exceeds 100%
+    if slider_sum != 100:
+        messagebox.showerror("Error!", "The sum of the sliders MUST equal 100")
     
-    # Close the previous figure window
-    if output == True:
-        matplotlib.pyplot.close()
-    
-    # Display the whole raster
-    if not top_ten:
-        plt.imshow(output_ar, cmap="Greys")
-    
-    # Diplays the top 10 percent of the raster in blue
+    # If slider_sum is ok
     else:
-        pc = splitter(output_ar, 90)
-        plt.imshow(output_ar, cmap="Blues", vmin=pc-1)
+        top_ten = var_adv.get()
+        
+        output = True
+        
+        # Close the previous figure window
+        if output == True:
+            matplotlib.pyplot.close()
+        
+        # Display the whole raster
+        if not top_ten:
+            plt.imshow(output_ar, cmap="Greys")
+        
+        # Diplays the top 10 percent of the raster in blue
+        else:
+            pc, new = splitter(output_ar, 90)
+            plt.imshow(output_ar, cmap="Greys")
+            plt.imshow(new, cmap="Blues", vmin=pc-1)
+            plt.show()
 
 
 def save_output():
     """
     A function which allows the user to save the last figure displayed. Can be 
-    saved as a CSV  file in .txt format.
+    saved as a CSV file in .txt format.
 
     Returns
     -------
-    Output file of the last figure displayed.
+    CSV file of the last figure displayed.
 
     """
     global output
